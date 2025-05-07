@@ -1,0 +1,137 @@
+Create a sleek, modern, and conversion-focused website for MPK — Auto Air-Conditioning Service, a company specializing in car AC diagnostics, maintenance, and repair. The website must be user-friendly and optimized for both desktop and mobile, with a professional but approachable tone. Use Next.js, Tailwind CSS, and ShadCN components to build the UI, and connect all lead forms to Supabase for backend handling.
+
+🏷️ Website Overview:
+Name: MPK
+
+Service: Automotive Air Conditioning Diagnostics & Repair
+
+Audience: Vehicle owners (commuters, fleet operators, rideshare drivers)
+
+Goal: Drive service bookings and educate users on vehicle AC health
+
+🎨 Color Palette (Automotive, Modern, Cool):
+Midnight Blue: #1E3A8A (trustworthy, professional)
+
+Ice White: #F9FAFB (clean, cool)
+
+Slate Gray: #6B7280 (neutral contrast)
+
+Accent Blue: #3B82F6 (CTA & link highlights)
+
+Engine Black: #111827 (text and footer)
+
+✨ Design Principles:
+Layout: Hero-focused landing page with logical flow — intro → services → trust → booking
+
+Spacing: Use px-6 md:px-12 and py-12 sections to maintain rhythm
+
+Typography:
+
+Headings: text-4xl md:text-5xl, font-bold, uppercase for key CTAs
+
+Body text: text-base md:text-lg, text-slate-700, generous line height
+
+Responsiveness: Mobile-first, collapsible navbar, touch-friendly forms
+
+Visual Hierarchy: Bold callouts for pricing & benefits, service tiles with icons and short descriptions
+
+🚘 Core Pages & Sections:
+Home Page
+Hero Section:
+
+Bold tagline: "Drive Cool. Drive Smart."
+
+Subtext: Expert Auto AC Service — Fast, Affordable, Reliable.
+
+CTA Buttons: “Book a Service” + “Check Symptoms”
+
+Background image: Cool-toned Unsplash car interior or dashboard AC vent
+
+Service Highlights (3-column or stacked on mobile):
+
+AC Diagnostic Check
+
+Refrigerant Refill
+
+Full System Repair
+
+Use shadcn/card for each, with icons and hover effects
+
+Customer Trust Section:
+
+Brief testimonial slider (placeholder)
+
+“Why MPK?” with icons: Fast turnaround, Certified technicians, Transparent pricing
+
+How it Works (Step-by-step):
+
+Choose your service
+
+Pick a time
+
+We service your car — on-site or at the shop
+
+CTA Banner:
+
+Full-width section: “Summer's Coming — Book Your AC Check Now”
+
+Blue background with white text, button link to Booking Page
+
+Footer:
+
+Contact info, nav links, booking button
+
+Optional: quick email capture for updates or tips
+
+🧾 Service Booking Page
+Route: /book
+
+Title: “Book Auto AC Service”
+
+Form Fields:
+
+Name, Email, Phone, Vehicle Make/Model, Service Needed (dropdown), Preferred Date/Time
+
+Use react-hook-form + zod
+
+Submission: Handled by Supabase, with success toast and loading indicator
+
+📞 Contact Page
+Route: /contact
+
+Compact form with:
+
+Name, Email, Message
+
+Embedded Google Map or placeholder iframe for garage location
+
+Display service hours and emergency contact number
+
+👨‍🔧 Apply Jobs Page
+Route: /apply
+
+Intro paragraph: “Join a fast-growing auto service team.”
+
+Application form:
+
+Name, Email, Phone, Position Applied For, Upload Resume, Experience Summary
+
+Submit via Supabase with email alert
+
+⚙️ Functionality Requirements
+Forms (Contact, Booking, Apply Jobs):
+
+Use react-hook-form + zod validation
+
+Submit to Supabase
+
+Trigger success toasts & loading states
+
+Use ShadCN UI for all form elements, dropdowns, and buttons
+
+Animate transitions subtly using Tailwind’s built-in transition classes
+
+📸 Image Use
+Use Unsplash images relevant to cars, AC systems, dashboards, and auto repair environments
+
+Apply dummy images where needed, but no blank placeholders
