@@ -1,0 +1,92 @@
+Upgrade the design and theme of an existing website for MPK — Auto Air-Conditioning Service by cloning the visual style, layout, and interaction patterns from https://automechanica.com. The new theme must apply to the existing content structure and preserve all the current functionality (pages, forms, Supabase integration), while elevating the visual presentation and UX.
+
+🧩 What to Clone from Automechanica.com:
+Fullscreen hero layout with background image/video and overlaid text + CTA
+
+Bold typography with large heading sizes, confident font weight, and high contrast
+
+Animated content entrance: slide/fade transitions on scroll
+
+Minimalistic color palette with a premium dark theme and vibrant highlight color
+
+Use of icon + text feature blocks for service highlights
+
+Modern sticky navigation with logo on the left, animated hover underline on links
+
+Smooth scrolling, subtle parallax, and interaction animations for a refined feel
+
+Flat card-based sections with bold titles and clean spacing
+
+Rounded CTA buttons, with strong visual prominence and hover animation
+
+Consistent layout spacing, large margins, and wide gutters
+
+🔧 Apply the following to the existing website:
+🎨 Visual Theme:
+Dark background: #0F172A (slate navy tone like Automechanica)
+
+Primary accent color: Vibrant Blue #3B82F6 (for buttons, links, icons)
+
+White and slate text: Use #F9FAFB and #94A3B8 for high contrast
+
+Rounded UI edges and soft shadows for a clean premium look
+
+📐 Layout & Structure:
+Apply full-width layouts with centered max-width containers (max-w-7xl mx-auto)
+
+Use two-tone section backgrounds for visual flow (alternate dark/very dark or dark/light)
+
+Apply consistent padding/margin (py-24 px-6 md:px-12)
+
+All content blocks should animate in with fade-up, slide-in, or zoom-in transitions
+
+All CTA sections must be full-width with strong visual breaks and animated call-to-actions
+
+🧠 Pages to Apply New Theme To:
+Home
+
+About
+
+Services (overview + each individual service)
+
+Booking
+
+Blog
+
+Contact
+
+Apply Jobs
+
+Ensure visual consistency across all pages, and enhance booking and job application forms with the new UI style (rounded inputs, glowing focus states, styled submit buttons).
+
+🧰 Functional Requirements (Preserve from Original Site):
+All forms (Booking, Apply Jobs, Contact) must stay functional and connected to Supabase
+
+Forms should keep react-hook-form + zod validation logic
+
+Maintain shadcn/ui components for all inputs/buttons — apply theme override tokens if necessary
+
+Keep sticky header, scroll-aware animations, and mobile navigation drawer
+
+📸 Images:
+Replace generic placeholders with relevant Unsplash images of:
+
+Car interiors, auto repair scenes, climate control
+
+Mechanic hands working on vents or diagnostics
+
+Clean, modern, and high-contrast images only
+
+All sections must use real images — avoid empty placeholders
+
+💡 Additional Enhancements:
+Animate section reveals using framer-motion or similar
+
+Use Tailwind + ShadCN overrides to match Automechanica’s premium dark theme
+
+Introduce soft glowing hover states for buttons and icons
+
+Add loading animations for page transitions and form submissions
+
+Final Note:
+Ensure the result feels like a high-end auto tech service brand, with a refined, luxurious feel — visually similar to Automechanica.com, but functionally aligned to MPK’s existing service offerings.
