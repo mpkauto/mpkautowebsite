@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import FAQSection from '@/components/home/FAQSection';
 
 export default function FAQPage() {
