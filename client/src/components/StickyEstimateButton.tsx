@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { EstimateModal } from "@/components/EstimateModal";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { EstimateModal } from '@/components/EstimateModal';
 
 export function StickyEstimateButton() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,4 +26,4 @@ export function StickyEstimateButton() {
       <EstimateModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
-} 
+}

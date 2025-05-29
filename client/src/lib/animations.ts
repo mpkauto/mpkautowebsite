@@ -1,4 +1,4 @@
-import { Variants } from "framer-motion";
+import { Variants } from 'framer-motion';
 
 // Container animations
 export const containerVariants: Variants = {
@@ -7,9 +7,9 @@ export const containerVariants: Variants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
+      delayChildren: 0.2,
+    },
+  },
 };
 
 // Item animations
@@ -19,11 +19,11 @@ export const itemVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 100,
-      damping: 15
-    }
-  }
+      damping: 15,
+    },
+  },
 };
 
 // Fade animations
@@ -34,9 +34,9 @@ export const fadeInUp: Variants = {
     y: 0,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 export const fadeIn: Variants = {
@@ -45,9 +45,9 @@ export const fadeIn: Variants = {
     opacity: 1,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 // Scale animations
@@ -58,9 +58,9 @@ export const scaleIn: Variants = {
     scale: 1,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 // Slide animations
@@ -71,9 +71,9 @@ export const slideInLeft: Variants = {
     x: 0,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 export const slideInRight: Variants = {
@@ -83,9 +83,9 @@ export const slideInRight: Variants = {
     x: 0,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 // Stagger animations
@@ -95,9 +95,9 @@ export const staggerContainer: Variants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
+      delayChildren: 0.2,
+    },
+  },
 };
 
 export const staggerItem: Variants = {
@@ -107,58 +107,58 @@ export const staggerItem: Variants = {
     y: 0,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 // Hover animations
 export const hoverScale: Variants = {
   initial: { scale: 1 },
-  hover: { 
+  hover: {
     scale: 1.05,
     transition: {
       duration: 0.2,
-      ease: "easeOut"
-    }
-  }
+      ease: 'easeOut',
+    },
+  },
 };
 
 export const hoverLift: Variants = {
   initial: { y: 0 },
-  hover: { 
+  hover: {
     y: -4,
     transition: {
       duration: 0.2,
-      ease: "easeOut"
-    }
-  }
+      ease: 'easeOut',
+    },
+  },
 };
 
 // Page transitions
 export const pageTransition: Variants = {
   initial: { opacity: 0, y: 20 },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     y: 0,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
+      ease: [0.22, 1, 0.36, 1],
+    },
   },
-  exit: { 
+  exit: {
     opacity: 0,
     y: -20,
     transition: {
       duration: 0.3,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 // Viewport animations
 export const viewportAnimation = {
   once: true,
   amount: 0.2,
-  margin: "-100px"
-}; 
+  margin: '-100px',
+};

@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import { Loader2 } from "lucide-react";
-import { insertJobApplicationSchema } from "@shared/schema";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useToast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
+import { Loader2 } from 'lucide-react';
+import { insertJobApplicationSchema } from '@shared/schema';
 
 import {
   Form,
@@ -14,52 +14,52 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 export default function JobApplicationForm() {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
+
   const form = useForm({
     resolver: zodResolver(insertJobApplicationSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      position: "",
-      experience: "",
-      resumeUrl: "",
+      name: '',
+      email: '',
+      phone: '',
+      position: '',
+      experience: '',
+      resumeUrl: '',
     },
   });
 
   const jobApplicationMutation = useMutation({
     mutationFn: async (data: any) => {
-      return apiRequest("POST", "/api/job-applications", data);
+      return apiRequest('POST', '/api/job-applications', data);
     },
     onSuccess: () => {
       toast({
-        title: "Application submitted!",
+        title: 'Application submitted!',
         description: "We'll review your application and contact you if there's a match.",
-        variant: "default",
+        variant: 'default',
       });
       form.reset();
       setIsSubmitted(true);
     },
     onError: (error) => {
       toast({
-        title: "Something went wrong.",
-        description: error.message || "Please try again later.",
-        variant: "destructive",
+        title: 'Something went wrong.',
+        description: error.message || 'Please try again later.',
+        variant: 'destructive',
       });
     },
   });
@@ -73,13 +73,10 @@ export default function JobApplicationForm() {
       <div className="bg-green-50 p-6 rounded-lg text-center">
         <h3 className="text-2xl font-bold text-green-700 mb-2">Application Received!</h3>
         <p className="text-green-600 mb-4">
-          Thank you for your interest in joining our team. We'll review your application and contact you if there's a match.
+          Thank you for your interest in joining our team. We'll review your application and contact
+          you if there's a match.
         </p>
-        <Button 
-          onClick={() => setIsSubmitted(false)}
-          variant="outline"
-          className="mx-auto"
-        >
+        <Button onClick={() => setIsSubmitted(false)} variant="outline" className="mx-auto">
           Submit Another Application
         </Button>
       </div>
@@ -87,11 +84,11 @@ export default function JobApplicationForm() {
   }
 
   const positions = [
-    { value: "ac-technician", label: "AC Technician" },
-    { value: "automotive-mechanic", label: "Automotive Mechanic" },
-    { value: "service-advisor", label: "Service Advisor" },
-    { value: "shop-manager", label: "Shop Manager" },
-    { value: "other", label: "Other" },
+    { value: 'ac-technician', label: 'AC Technician' },
+    { value: 'automotive-mechanic', label: 'Automotive Mechanic' },
+    { value: 'service-advisor', label: 'Service Advisor' },
+    { value: 'shop-manager', label: 'Shop Manager' },
+    { value: 'other', label: 'Other' },
   ];
 
   return (
@@ -172,10 +169,7 @@ export default function JobApplicationForm() {
             <FormItem>
               <FormLabel>Resume URL (Dropbox, Google Drive, etc.)</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="https://drive.google.com/your-resume" 
-                  {...field} 
-                />
+                <Input placeholder="https://drive.google.com/your-resume" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -189,10 +183,10 @@ export default function JobApplicationForm() {
             <FormItem>
               <FormLabel>Experience Summary</FormLabel>
               <FormControl>
-                <Textarea 
-                  placeholder="Briefly describe your relevant experience and qualifications" 
-                  className="resize-none min-h-[150px]" 
-                  {...field} 
+                <Textarea
+                  placeholder="Briefly describe your relevant experience and qualifications"
+                  className="resize-none min-h-[150px]"
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -207,7 +201,7 @@ export default function JobApplicationForm() {
               Submitting...
             </>
           ) : (
-            "Submit Application"
+            'Submit Application'
           )}
         </Button>
       </form>

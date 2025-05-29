@@ -1,7 +1,7 @@
-import { Link } from "wouter";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
-import { ScrollAnimation } from "@/components/ui/scroll-animation";
-import { Button } from "@/components/ui/button";
+import { Link } from 'wouter';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { ScrollAnimation } from '@/components/ui/scroll-animation';
+import { Button } from '@/components/ui/button';
 
 export default function TourBusCaseStudy() {
   return (
@@ -11,7 +11,10 @@ export default function TourBusCaseStudy() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent opacity-50"></div>
         <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
           <ScrollAnimation variant="fadeUp">
-            <Link href="/#case-studies" className="text-brand-contrastText hover:underline mb-8 inline-flex items-center group">
+            <Link
+              href="/#case-studies"
+              className="text-brand-contrastText hover:underline mb-8 inline-flex items-center group"
+            >
               <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
               Back to Case Studies
             </Link>
@@ -42,7 +45,9 @@ export default function TourBusCaseStudy() {
               <div>
                 <h2 className="text-4xl font-semibold mb-6 text-white">Challenge</h2>
                 <p className="text-base text-gray-300 leading-relaxed">
-                  A Chennai-based tour operator faced persistent AC failures in one of its large-capacity tour buses, leading to discomfort during long-distance journeys and affecting customer satisfaction.
+                  A Chennai-based tour operator faced persistent AC failures in one of its
+                  large-capacity tour buses, leading to discomfort during long-distance journeys and
+                  affecting customer satisfaction.
                 </p>
               </div>
             </ScrollAnimation>
@@ -52,7 +57,10 @@ export default function TourBusCaseStudy() {
               <div>
                 <h2 className="text-4xl font-semibold mb-6 text-white">Solution</h2>
                 <p className="text-base text-gray-300 leading-relaxed">
-                  MPK Auto AC Services performed a full-system AC overhaul, including compressor replacement, duct cleaning, refrigerant optimization, and airflow balancing. The upgrade ensured uniform cooling from front to rear—even during peak summer heat on extended routes.
+                  MPK Auto AC Services performed a full-system AC overhaul, including compressor
+                  replacement, duct cleaning, refrigerant optimization, and airflow balancing. The
+                  upgrade ensured uniform cooling from front to rear—even during peak summer heat on
+                  extended routes.
                 </p>
               </div>
             </ScrollAnimation>
@@ -64,15 +72,21 @@ export default function TourBusCaseStudy() {
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="h-6 w-6 text-gray-300 flex-shrink-0 mt-1" />
-                    <span className="text-base text-gray-300">Enhanced passenger comfort on multi-hour trips</span>
+                    <span className="text-base text-gray-300">
+                      Enhanced passenger comfort on multi-hour trips
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="h-6 w-6 text-gray-300 flex-shrink-0 mt-1" />
-                    <span className="text-base text-gray-300">Reliable cooling performance under heavy load</span>
+                    <span className="text-base text-gray-300">
+                      Reliable cooling performance under heavy load
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="h-6 w-6 text-gray-300 flex-shrink-0 mt-1" />
-                    <span className="text-base text-gray-300">Reduced maintenance calls and operational downtime</span>
+                    <span className="text-base text-gray-300">
+                      Reduced maintenance calls and operational downtime
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -105,14 +119,14 @@ export default function TourBusCaseStudy() {
             {/* CTA */}
             <ScrollAnimation variant="fadeUp" delay={0.5}>
               <div className="bg-[#111827] p-8 rounded-2xl border border-primary/20">
-                <h2 className="text-4xl font-semibold mb-6 text-white">🚌 Run group transport or tours?</h2>
+                <h2 className="text-4xl font-semibold mb-6 text-white">
+                  🚌 Run group transport or tours?
+                </h2>
                 <p className="text-base text-gray-300 mb-6">
                   Partner with MPK for expert large-vehicle AC solutions.
                 </p>
                 <Link href="/booking">
-                  <Button variant="default">
-                    Book Fleet Consultation
-                  </Button>
+                  <Button variant="default">Book Fleet Consultation</Button>
                 </Link>
               </div>
             </ScrollAnimation>
@@ -121,4 +135,4 @@ export default function TourBusCaseStudy() {
       </section>
     </main>
   );
-} 
+}

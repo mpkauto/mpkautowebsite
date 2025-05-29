@@ -1,11 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { ScrollAnimation } from "@/components/ui/scroll-animation";
-import { Link } from "wouter";
-import { ArrowRight } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { ScrollAnimation } from '@/components/ui/scroll-animation';
+import { Link } from 'wouter';
+import { ArrowRight } from 'lucide-react';
 
 export default function CTASection() {
   return (
-    <section className="py-24 bg-gradient-to-r from-gray-100 to-frost"> {/* Updated from sky/teal */}
+    <section className="py-24 bg-gradient-to-r from-gray-100 to-frost">
+      {' '}
+      {/* Updated from sky/teal */}
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <ScrollAnimation variant="slideRight" delay={0.1}>
@@ -17,7 +19,9 @@ export default function CTASection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/book-service">
-                <Button className="bg-gradient-to-br from-gray-300 to-gray-100 text-black shadow-inner py-3 px-8 rounded-md transition-all duration-300 hover:shadow-lg group"> {/* Updated from red */}
+                <Button className="bg-gradient-to-br from-gray-300 to-gray-100 text-black shadow-inner py-3 px-8 rounded-md transition-all duration-300 hover:shadow-lg group">
+                  {' '}
+                  {/* Updated from red */}
                   {/* Button content */}
                 </Button>
               </Link>

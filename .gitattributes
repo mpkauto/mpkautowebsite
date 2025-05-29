@@ -1,0 +1,35 @@
+# Set default behavior to automatically normalize line endings
+* text=auto eol=lf
+
+# Force Windows-style line endings for batch files
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+
+# Force Unix-style line endings for shell scripts
+*.sh text eol=lf
+
+# Source code files
+*.{js,jsx,ts,tsx,json,css,scss,html,md,yml,yaml} text eol=lf
+
+# Binary files should not be modified
+*.{png,jpg,jpeg,gif,ico,webp,woff,woff2,ttf,eot,svg,pdf,zip,rar,7z,docx,xlsx,doc,xls,ppt,pptx} binary
+
+# Don't normalize vendor files
+/vendor/** -text
+
+# Don't normalize node_modules
+/node_modules/** -text
+
+# Don't normalize dist directory
+/dist/** -text
+
+# Don't normalize build output
+/build/** -text
+
+# Handle lock files
+package-lock.json binary
+yarn.lock -text
+pnpm-lock.yaml -text
+
+# Don't normalize .gitattributes itself
+.gitattributes -text

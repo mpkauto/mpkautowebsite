@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import { testConnection } from '@/lib/supabaseClient'
+import { useEffect, useState } from 'react';
+import { testConnection } from '@/lib/supabaseClient';
 
 export function SupabaseTest() {
-  const [isConnected, setIsConnected] = useState<boolean | null>(null)
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
 
   useEffect(() => {
     async function checkConnection() {
-      const connected = await testConnection()
-      setIsConnected(connected)
+      const connected = await testConnection();
+      setIsConnected(connected);
     }
-    checkConnection()
-  }, [])
+    checkConnection();
+  }, []);
 
   return (
     <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-800">
@@ -23,5 +23,5 @@ export function SupabaseTest() {
         <p className="text-red-500">❌ Failed to connect to Supabase</p>
       )}
     </div>
-  )
-} 
+  );
+}

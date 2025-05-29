@@ -3,7 +3,7 @@ const inMemoryStorage = {
   bookings: [],
   contacts: [],
   jobApplications: [],
-  users: []
+  users: [],
 };
 
 export const db = {
@@ -35,9 +35,8 @@ export const db = {
     getAll: () => inMemoryStorage.jobApplications,
   },
   users: {
-    findByUsername: (username: string) => 
-      inMemoryStorage.users.find(u => u.username === username),
-    findById: (id: number) => 
-      inMemoryStorage.users.find(u => u.id === id),
-  }
-}; 
+    findByUsername: (username: string) =>
+      inMemoryStorage.users.find((u) => u.username === username),
+    findById: (id: number) => inMemoryStorage.users.find((u) => u.id === id),
+  },
+};

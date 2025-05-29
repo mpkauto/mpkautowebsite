@@ -1,38 +1,40 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 export function BookingsList() {
-  const [bookings, setBookings] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchBookings() {
       try {
         const { data, error } = await supabase
           .from('appointments')
-          .select(`
+          .select(
+            `
             *,
             profiles:user_id(full_name, email, phone),
             services:service_id(name)
-          `)
-          .order('created_at', { ascending: false })
+          `
+          )
+          .order('created_at', { ascending: false });
 
-        if (error) throw error
-        setBookings(data || [])
+        if (error) throw error;
+        setBookings(data || []);
       } catch (err) {
-        setError('Failed to fetch bookings')
-        console.error('Error fetching bookings:', err)
+        setError('Failed to fetch bookings');
+        console.error('Error fetching bookings:', err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 
-    fetchBookings()
-  }, [])
+    fetchBookings();
+  }, []);
 
-  if (loading) return <div className="p-4">Loading bookings...</div>
-  if (error) return <div className="p-4 text-red-500">{error}</div>
+  if (loading) return <div className="p-4">Loading bookings...</div>;
+  if (error) return <div className="p-4 text-red-500">{error}</div>;
 
   return (
     <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-800">
@@ -50,7 +52,9 @@ export function BookingsList() {
                 </span>
               </div>
               <p className="text-sm mt-2">Service: {booking.services?.name || 'Unknown'}</p>
-              <p className="text-sm mt-1">Status: <span className="capitalize">{booking.status}</span></p>
+              <p className="text-sm mt-1">
+                Status: <span className="capitalize">{booking.status}</span>
+              </p>
               {booking.notes && (
                 <div className="mt-2 text-sm">
                   <p className="font-medium">Notes:</p>
@@ -62,5 +66,5 @@ export function BookingsList() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,49 +1,49 @@
-import HeroSection from "@/components/home/HeroSection";
-import SymptomsSection from "@/components/home/SymptomsSection";
-import ValuePropositionSection from "@/components/home/ValuePropositionSection";
-import PromotionalBanner from "@/components/home/PromotionalBanner";
-import FAQSection from "@/components/home/FAQSection";
-import BrandLogosGrid from "@/components/home/BrandLogosGrid";
-import { Helmet } from "react-helmet-async";
-import ServicesGridSection from "@/components/home/ServicesGridSection";
-import CaseStudiesSection from "@/components/home/CaseStudiesSection";
-import StatsSection from "@/components/home/StatsSection";
-import { Divider } from "@/components/ui/divider";
+import HeroSection from '@/components/home/HeroSection';
+import SymptomsSection from '@/components/home/SymptomsSection';
+import ValuePropositionSection from '@/components/home/ValuePropositionSection';
+import PromotionalBanner from '@/components/home/PromotionalBanner';
+import FAQSection from '@/components/home/FAQSection';
+import BrandLogosGrid from '@/components/home/BrandLogosGrid';
+import { Helmet } from 'react-helmet-async';
+import ServicesGridSection from '@/components/home/ServicesGridSection';
+import CaseStudiesSection from '@/components/home/CaseStudiesSection';
+import StatsSection from '@/components/home/StatsSection';
+import { Divider } from '@/components/ui/divider';
 
 export default function Home() {
   return (
     <main>
       <Helmet>
         <title>MPK — Auto Air-Conditioning Service | Drive Cool, Drive Smart</title>
-        <meta 
-          name="description" 
+        <meta
+          name="description"
           content="Expert automotive air conditioning service. Fast, affordable, reliable AC repair and maintenance to keep you cool on the road."
         />
-        <meta 
-          property="og:title" 
+        <meta
+          property="og:title"
           content="MPK — Auto Air-Conditioning Service | Drive Cool, Drive Smart"
         />
-        <meta 
-          property="og:description" 
+        <meta
+          property="og:description"
           content="Professional automotive air conditioning diagnostics, maintenance, and repair services."
         />
       </Helmet>
 
       {/* 1. Hero Section */}
       <section id="home" aria-label="Hero section">
-      <HeroSection />
+        <HeroSection />
       </section>
       <Divider />
 
       {/* 2. Problem Section */}
       <section id="symptoms" aria-label="Common AC problems">
-      <SymptomsSection />
+        <SymptomsSection />
       </section>
       <Divider />
 
       {/* 3. MPK Difference */}
       <section id="value-proposition" aria-label="Why choose MPK">
-      <ValuePropositionSection />
+        <ValuePropositionSection />
       </section>
       <Divider />
 
@@ -61,7 +61,7 @@ export default function Home() {
 
       {/* 6. Pickup & Drop Offer */}
       <section id="promotion" aria-label="Special offer">
-      <PromotionalBanner />
+        <PromotionalBanner />
       </section>
       <Divider />
 
@@ -79,10 +79,13 @@ export default function Home() {
       <Divider />
 
       {/* 9. Brand Logos and Service Areas - New Section */}
-      <section id="brands-and-areas" aria-label="Brands we service and service coverage areas" className="bg-white">
+      <section
+        id="brands-and-areas"
+        aria-label="Brands we service and service coverage areas"
+        className="bg-white"
+      >
         <BrandLogosGrid />
       </section>
-
     </main>
   );
 }

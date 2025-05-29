@@ -1,7 +1,7 @@
-import React from "react";
-import { Layout } from "../components/layout";
-import { Hero } from "../components/hero";
-import { CtaBanner } from "../components/cta-banner"; // Import the new component
+import React from 'react';
+import { Layout } from '../components/layout';
+import { Hero } from '../components/hero';
+import { CtaBanner } from '../components/cta-banner'; // Import the new component
 
 export function HomePage() {
   return (

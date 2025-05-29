@@ -1,31 +1,31 @@
-import { useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
-import { useNavigate } from 'wouter'
+import { useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import { useNavigate } from 'wouter';
 
 export function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [, navigate] = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [, navigate] = useNavigate();
 
   async function handleLogin(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
-        password
-      })
+        password,
+      });
 
-      if (error) throw error
-      navigate('/')
+      if (error) throw error;
+      navigate('/');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to login')
+      setError(err instanceof Error ? err.message : 'Failed to login');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -88,5 +88,5 @@ export function Login() {
         </form>
       </div>
     </div>
-  )
-} 
+  );
+}

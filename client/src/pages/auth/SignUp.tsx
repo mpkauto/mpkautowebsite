@@ -1,51 +1,49 @@
-import { useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
-import { useNavigate } from 'wouter'
+import { useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import { useNavigate } from 'wouter';
 
 export function SignUp() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [, navigate] = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [, navigate] = useNavigate();
 
   async function handleSignUp(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     try {
       // Sign up the user
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
-        password
-      })
+        password,
+      });
 
-      if (authError) throw authError
+      if (authError) throw authError;
 
       // Create profile
       if (authData.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: authData.user.id,
-              username,
-              email,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString()
-            }
-          ])
+        const { error: profileError } = await supabase.from('profiles').insert([
+          {
+            id: authData.user.id,
+            username,
+            email,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+        ]);
 
-        if (profileError) throw profileError
+        if (profileError) throw profileError;
       }
 
-      navigate('/')
+      navigate('/');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign up')
+      setError(err instanceof Error ? err.message : 'Failed to sign up');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -123,5 +121,5 @@ export function SignUp() {
         </form>
       </div>
     </div>
-  )
-} 
+  );
+}

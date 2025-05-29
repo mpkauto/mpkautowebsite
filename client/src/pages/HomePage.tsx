@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import HeroSection from "@/components/home/HeroSection";
-import ValuePropositionSection from "@/components/home/ValuePropositionSection";
-import MainCTASection from "@/components/home/MainCTASection";
-import StatsSection from "@/components/home/StatsSection";
+import { motion } from 'framer-motion';
+import HeroSection from '@/components/home/HeroSection';
+import ValuePropositionSection from '@/components/home/ValuePropositionSection';
+import MainCTASection from '@/components/home/MainCTASection';
+import StatsSection from '@/components/home/StatsSection';
 
 export default function HomePage() {
   return (
@@ -18,4 +18,4 @@ export default function HomePage() {
       <MainCTASection />
     </motion.div>
   );
-} 
+}

@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
 
 // Update the type definition to include "fadeRight"
-type AnimationVariant = "fadeUp" | "fadeIn" | "scaleUp" | "slideRight" | "fadeRight";
+type AnimationVariant = 'fadeUp' | 'fadeIn' | 'scaleUp' | 'slideRight' | 'fadeRight';
 
 // Then add the animation variant in the variants object
 const variants = {
@@ -41,10 +41,10 @@ interface ScrollAnimationProps {
 
 export function ScrollAnimation({
   children,
-  variant = "fadeUp",
+  variant = 'fadeUp',
   delay = 0,
   duration = 0.5,
-  className = "",
+  className = '',
   once = true,
   amount = 0.3,
 }: ScrollAnimationProps) {
@@ -78,7 +78,7 @@ export function ScrollAnimation({
       whileInView="visible"
       viewport={{ once, amount }}
       variants={variants[variant as keyof typeof variants]}
-      transition={{ duration, delay, ease: "easeOut" }}
+      transition={{ duration, delay, ease: 'easeOut' }}
       className={className}
     >
       {children}

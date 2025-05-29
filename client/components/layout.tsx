@@ -1,14 +1,14 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import { Navbar } from "./navbar";
-import { Link } from "wouter";
-import { Toaster } from "../src/components/ui/toaster";
-import { ArrowRight, MapPin, Phone, Mail } from "lucide-react";
-import Particles from "react-tsparticles";
-import type { Container, Engine } from "tsparticles-engine";
-import { loadSlim } from "tsparticles-slim"; // loads tsparticles-slim
-import { StickyEstimateButton } from "../src/components/StickyEstimateButton";
-import Footer from "../src/components/layout/Footer";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { Navbar } from './navbar';
+import { Link } from 'wouter';
+import { Toaster } from '../src/components/ui/toaster';
+import { ArrowRight, MapPin, Phone, Mail } from 'lucide-react';
+import Particles from 'react-tsparticles';
+import type { Container, Engine } from 'tsparticles-engine';
+import { loadSlim } from 'tsparticles-slim'; // loads tsparticles-slim
+import { StickyEstimateButton } from '../src/components/StickyEstimateButton';
+import Footer from '../src/components/layout/Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,10 +16,10 @@ interface LayoutProps {
   description?: string;
 }
 
-export function Layout({ 
-  children, 
-  title = "MPK Auto Service - Professional Auto Repair Services",
-  description = "Expert auto repair and maintenance services. Book your appointment today for professional car care."
+export function Layout({
+  children,
+  title = 'MPK Auto Service - Professional Auto Repair Services',
+  description = 'Expert auto repair and maintenance services. Book your appointment today for professional car care.',
 }: LayoutProps) {
   return (
     <div className="bg-black text-white min-h-screen font-sans" style={{ overflowX: 'hidden' }}>
@@ -36,18 +36,18 @@ export function Layout({
         id="tsparticles"
         options={{
           background: {
-            color: { value: "#000000" },
+            color: { value: '#000000' },
           },
           fpsLimit: 120,
           interactivity: {
             events: {
               onClick: {
                 enable: false,
-                mode: "push",
+                mode: 'push',
               },
               onHover: {
                 enable: true,
-                mode: "repulse",
+                mode: 'repulse',
               },
               resize: true,
             },
@@ -63,19 +63,19 @@ export function Layout({
           },
           particles: {
             color: {
-              value: "#ffffff",
+              value: '#ffffff',
             },
             links: {
-              color: "#ffffff",
+              color: '#ffffff',
               distance: 150,
               enable: true,
               opacity: 0.5,
               width: 1,
             },
             move: {
-              direction: "none",
+              direction: 'none',
               enable: true,
-              outModes: { default: "bounce" },
+              outModes: { default: 'bounce' },
               random: false,
               speed: 2,
               straight: false,
@@ -91,7 +91,7 @@ export function Layout({
               value: 0.5,
             },
             shape: {
-              type: "circle",
+              type: 'circle',
             },
             size: {
               value: { min: 1, max: 5 },
@@ -116,7 +116,10 @@ export function Layout({
           <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-center md:text-left">
             Ready for a Cooler Ride?
           </h3>
-          <Link href="/book" className="inline-flex items-center text-white bg-white bg-opacity-20 px-6 py-3 rounded-full font-semibold hover:bg-opacity-30 transition-all duration-300">
+          <Link
+            href="/book"
+            className="inline-flex items-center text-white bg-white bg-opacity-20 px-6 py-3 rounded-full font-semibold hover:bg-opacity-30 transition-all duration-300"
+          >
             Book Your Free AC Checkup
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
@@ -131,7 +134,9 @@ export function Layout({
             <p className="mb-4">Expert auto AC repair and maintenance services in Chennai.</p>
             <div className="flex items-center text-gray-700 mb-2">
               <MapPin className="h-4 w-4 mr-2 text-[#739bd4]" />
-              <span>No:112, Metro Star City, 1st Main Road, Manikandan Nagar, Kundratur, Chennai - 69</span>
+              <span>
+                No:112, Metro Star City, 1st Main Road, Manikandan Nagar, Kundratur, Chennai - 69
+              </span>
             </div>
             <div className="flex items-center text-gray-700 mb-2">
               <Phone className="h-4 w-4 mr-2 text-[#739bd4]" />
@@ -147,10 +152,26 @@ export function Layout({
           <div>
             <h4 className="font-semibold text-gray-900 mb-4 text-base">Quick Links</h4>
             <ul className="space-y-2">
-              <li><Link href="/about" className="hover:text-gray-900 transition-colors">About Us</Link></li>
-              <li><Link href="/services" className="hover:text-gray-900 transition-colors">Services</Link></li>
-              <li><Link href="/case-studies" className="hover:text-gray-900 transition-colors">Case Studies</Link></li>
-              <li><Link href="/faq" className="hover:text-gray-900 transition-colors">FAQ</Link></li>
+              <li>
+                <Link href="/about" className="hover:text-gray-900 transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="hover:text-gray-900 transition-colors">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/case-studies" className="hover:text-gray-900 transition-colors">
+                  Case Studies
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-gray-900 transition-colors">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -158,10 +179,32 @@ export function Layout({
           <div>
             <h4 className="font-semibold text-gray-900 mb-4 text-base">Services</h4>
             <ul className="space-y-2">
-              <li><Link href="/services#diagnostics" className="hover:text-gray-900 transition-colors">Diagnostics</Link></li>
-              <li><Link href="/services#repair" className="hover:text-gray-900 transition-colors">Repair</Link></li>
-              <li><Link href="/services#maintenance" className="hover:text-gray-900 transition-colors">Maintenance</Link></li>
-              <li><Link href="/services#recharging" className="hover:text-gray-900 transition-colors">Recharging</Link></li>
+              <li>
+                <Link
+                  href="/services#diagnostics"
+                  className="hover:text-gray-900 transition-colors"
+                >
+                  Diagnostics
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#repair" className="hover:text-gray-900 transition-colors">
+                  Repair
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services#maintenance"
+                  className="hover:text-gray-900 transition-colors"
+                >
+                  Maintenance
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#recharging" className="hover:text-gray-900 transition-colors">
+                  Recharging
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -169,8 +212,16 @@ export function Layout({
           <div>
             <h4 className="font-semibold text-gray-900 mb-4 text-base">Legal</h4>
             <ul className="space-y-2">
-              <li><Link href="/privacy" className="hover:text-white transition-colors duration-200">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-white transition-colors duration-200">Terms of Service</Link></li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors duration-200">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors duration-200">
+                  Terms of Service
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

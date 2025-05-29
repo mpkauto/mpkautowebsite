@@ -1,15 +1,15 @@
 // client/src/components/booking/BookingForm.tsx
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
-import { getTimeSlots, cn } from "@/lib/utils";
-import toast from "react-hot-toast";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { Loader2 } from 'lucide-react';
+import { getTimeSlots, cn } from '@/lib/utils';
+import toast from 'react-hot-toast';
 
-import { insertBookingSchema, type InsertBooking } from "@shared/schema";
-import { createBooking } from "@/services/bookingService";
+import { insertBookingSchema, type InsertBooking } from '@shared/schema';
+import { createBooking } from '@/services/bookingService';
 
 import {
   Form,
@@ -18,24 +18,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 // Hardcoded for now; can be fetched from Supabase if needed
-const serviceOptions = [
-  "Basic Service",
-  "Full Service",
-  "Premium Service",
-];
+const serviceOptions = ['Basic Service', 'Full Service', 'Premium Service'];
 
 export default function BookingForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -43,26 +39,26 @@ export default function BookingForm() {
   const form = useForm<InsertBooking>({
     resolver: zodResolver(insertBookingSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      vehicleInfo: "",
-      serviceType: "",
-      preferredDate: "",
-      preferredTime: "",
-      notes: "",
+      name: '',
+      email: '',
+      phone: '',
+      vehicleInfo: '',
+      serviceType: '',
+      preferredDate: '',
+      preferredTime: '',
+      notes: '',
     },
   });
 
   const mutation = useMutation({
     mutationFn: createBooking,
     onSuccess: () => {
-      toast.success("Booking submitted!");
+      toast.success('Booking submitted!');
       setIsSubmitted(true);
     },
     onError: (err: any) => {
-      console.error("Booking error:", err);
-      toast.error("An unexpected error occurred. Please try again.");
+      console.error('Booking error:', err);
+      toast.error('An unexpected error occurred. Please try again.');
     },
   });
 
@@ -77,11 +73,7 @@ export default function BookingForm() {
         <p className="text-green-600 mb-4">
           Your booking request has been received. We'll contact you shortly.
         </p>
-        <Button
-          onClick={() => setIsSubmitted(false)}
-          variant="outline"
-          className="mx-auto"
-        >
+        <Button onClick={() => setIsSubmitted(false)} variant="outline" className="mx-auto">
           Book Another Service
         </Button>
       </div>
@@ -106,8 +98,8 @@ export default function BookingForm() {
                     placeholder="John Smith"
                     {...field}
                     className={cn(
-                      "text-white placeholder:text-gray-400",
-                      form.formState.errors.name && "border-red-500"
+                      'text-white placeholder:text-gray-400',
+                      form.formState.errors.name && 'border-red-500'
                     )}
                   />
                 </FormControl>
@@ -127,8 +119,8 @@ export default function BookingForm() {
                     placeholder="(123) 456-7890"
                     {...field}
                     className={cn(
-                      "text-white placeholder:text-gray-400",
-                      form.formState.errors.phone && "border-red-500"
+                      'text-white placeholder:text-gray-400',
+                      form.formState.errors.phone && 'border-red-500'
                     )}
                   />
                 </FormControl>
@@ -149,8 +141,8 @@ export default function BookingForm() {
                   placeholder="your.email@example.com"
                   {...field}
                   className={cn(
-                    "text-white placeholder:text-gray-400",
-                    form.formState.errors.email && "border-red-500"
+                    'text-white placeholder:text-gray-400',
+                    form.formState.errors.email && 'border-red-500'
                   )}
                 />
               </FormControl>
@@ -171,8 +163,8 @@ export default function BookingForm() {
                     placeholder="Toyota Camry 2018"
                     {...field}
                     className={cn(
-                      "text-white placeholder:text-gray-400",
-                      form.formState.errors.vehicleInfo && "border-red-500"
+                      'text-white placeholder:text-gray-400',
+                      form.formState.errors.vehicleInfo && 'border-red-500'
                     )}
                   />
                 </FormControl>
@@ -186,10 +178,7 @@ export default function BookingForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white">Service Needed</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger className="text-white">
                       <SelectValue placeholder="Select a service" />
@@ -221,8 +210,8 @@ export default function BookingForm() {
                     type="date"
                     {...field}
                     className={cn(
-                      "text-white",
-                      form.formState.errors.preferredDate && "border-red-500"
+                      'text-white',
+                      form.formState.errors.preferredDate && 'border-red-500'
                     )}
                   />
                 </FormControl>
@@ -236,10 +225,7 @@ export default function BookingForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white">Preferred Time</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger className="text-white">
                       <SelectValue placeholder="Select a time" />
@@ -288,7 +274,7 @@ export default function BookingForm() {
               Submitting...
             </>
           ) : (
-            "Book Appointment"
+            'Book Appointment'
           )}
         </Button>
       </form>

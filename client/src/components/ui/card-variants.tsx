@@ -1,6 +1,13 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import React from "react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import React from 'react';
 
 interface CustomCardProps {
   className?: string;
@@ -8,17 +15,17 @@ interface CustomCardProps {
   withHoverEffect?: boolean;
 }
 
-export function CustomCard({ 
-  className, 
-  children, 
+export function CustomCard({
+  className,
+  children,
   withHoverEffect = true,
-  ...props 
+  ...props
 }: CustomCardProps) {
   return (
     <Card
       className={cn(
-        "bg-gray-light rounded-xl",
-        withHoverEffect && "hover:scale-105 hover:ring-1 hover:ring-[#9B9B9B]/30 transition-all",
+        'bg-gray-light rounded-xl',
+        withHoverEffect && 'hover:scale-105 hover:ring-1 hover:ring-[#9B9B9B]/30 transition-all',
         className
       )}
       {...props}
@@ -29,15 +36,11 @@ export function CustomCard({
 }
 
 // Update StyledCard as well
-export function StyledCardVariant({
-  className, 
-  children,
-  ...props 
-}: CustomCardProps) {
+export function StyledCardVariant({ className, children, ...props }: CustomCardProps) {
   return (
     <Card
       className={cn(
-        "bg-graphite border border-metallic/20 rounded-xl p-6 hover:scale-105 hover:ring-1 hover:ring-[#9B9B9B]/30 transition-all",
+        'bg-graphite border border-metallic/20 rounded-xl p-6 hover:scale-105 hover:ring-1 hover:ring-[#9B9B9B]/30 transition-all',
         className
       )}
       {...props}
@@ -49,7 +52,7 @@ export function StyledCardVariant({
 
 export function CustomCardHeader({ className, children, ...props }: CustomCardProps) {
   return (
-    <CardHeader className={cn("px-6 pt-6", className)} {...props}>
+    <CardHeader className={cn('px-6 pt-6', className)} {...props}>
       {children}
     </CardHeader>
   );
@@ -57,7 +60,7 @@ export function CustomCardHeader({ className, children, ...props }: CustomCardPr
 
 export function CustomCardContent({ className, children, ...props }: CustomCardProps) {
   return (
-    <CardContent className={cn("px-6 py-4", className)} {...props}>
+    <CardContent className={cn('px-6 py-4', className)} {...props}>
       {children}
     </CardContent>
   );
@@ -65,7 +68,7 @@ export function CustomCardContent({ className, children, ...props }: CustomCardP
 
 export function CustomCardFooter({ className, children, ...props }: CustomCardProps) {
   return (
-    <CardFooter className={cn("px-6 pb-6 pt-2", className)} {...props}>
+    <CardFooter className={cn('px-6 pb-6 pt-2', className)} {...props}>
       {children}
     </CardFooter>
   );
@@ -91,18 +94,14 @@ export function ConsistentCard({
   return (
     <Card
       className={cn(
-        "bg-surface p-6 rounded-xl shadow-md hover:scale-105 hover:ring-1 hover:ring-[#9B9B9B]/30 transition-all",
+        'bg-surface p-6 rounded-xl shadow-md hover:scale-105 hover:ring-1 hover:ring-[#9B9B9B]/30 transition-all',
         className
       )}
       {...props}
     >
-      {title && (
-        <CardTitle className="text-xl font-semibold mb-2">{title}</CardTitle>
-      )}
+      {title && <CardTitle className="text-xl font-semibold mb-2">{title}</CardTitle>}
       {description && (
-        <CardDescription className="text-sm text-textMuted mt-2">
-          {description}
-        </CardDescription>
+        <CardDescription className="text-sm text-textMuted mt-2">{description}</CardDescription>
       )}
       {children && <div className="mt-4">{children}</div>}
       {footer && <div className="mt-6">{footer}</div>}
@@ -111,15 +110,11 @@ export function ConsistentCard({
 }
 
 // New styled card component with the specified styling
-export function StyledCard({ 
-  className, 
-  children,
-  ...props 
-}: CustomCardProps) {
+export function StyledCard({ className, children, ...props }: CustomCardProps) {
   return (
     <Card
       className={cn(
-        "bg-graphite border border-metallic/20 rounded-xl p-6 hover:ring-1 hover:ring-metallic/30 transition",
+        'bg-graphite border border-metallic/20 rounded-xl p-6 hover:ring-1 hover:ring-metallic/30 transition',
         className
       )}
       {...props}
@@ -131,7 +126,7 @@ export function StyledCard({
 
 export function StyledCardTitle({ className, children, ...props }: CustomCardProps) {
   return (
-    <CardTitle className={cn("text-platinum font-heading text-xl", className)} {...props}>
+    <CardTitle className={cn('text-platinum font-heading text-xl', className)} {...props}>
       {children}
     </CardTitle>
   );
@@ -139,7 +134,7 @@ export function StyledCardTitle({ className, children, ...props }: CustomCardPro
 
 export function StyledCardText({ className, children, ...props }: CustomCardProps) {
   return (
-    <div className={cn("text-metallic font-body text-sm leading-relaxed", className)} {...props}>
+    <div className={cn('text-metallic font-body text-sm leading-relaxed', className)} {...props}>
       {children}
     </div>
   );

@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
 
 interface CardGridAnimationProps {
   children: ReactNode;
@@ -26,21 +26,21 @@ export function CardGridAnimation({
       transition: {
         staggerChildren: staggerDelay,
         delayChildren: delay,
-      }
-    }
+      },
+    },
   };
-  
+
   // Individual card animation
   const itemVariants = {
     hidden: { opacity: 0, y: initialY },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: duration, 
-        ease: "easeOut" 
-      } 
-    }
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: duration,
+        ease: 'easeOut',
+      },
+    },
   };
 
   return (
