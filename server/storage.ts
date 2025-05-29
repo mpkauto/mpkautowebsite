@@ -4,6 +4,9 @@ import {
   contacts, type Contact, type InsertContact,
   jobApplications, type JobApplication, type InsertJobApplication 
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
+import bcrypt from 'bcrypt';
 
 export interface IStorage {
   // User Operations
@@ -27,109 +30,71 @@ export interface IStorage {
   getAllJobApplications(): Promise<JobApplication[]>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private bookingsStore: Map<number, Booking>;
-  private contactsStore: Map<number, Contact>;
-  private jobApplicationsStore: Map<number, JobApplication>;
-  
-  private userId: number;
-  private bookingId: number;
-  private contactId: number;
-  private jobApplicationId: number;
-
-  constructor() {
-    this.users = new Map();
-    this.bookingsStore = new Map();
-    this.contactsStore = new Map();
-    this.jobApplicationsStore = new Map();
-    
-    this.userId = 1;
-    this.bookingId = 1;
-    this.contactId = 1;
-    this.jobApplicationId = 1;
-  }
-
+export class DrizzleStorage implements IStorage {
   // User Methods
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.userId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+    const hashedPassword = await bcrypt.hash(insertUser.password, 10);
+    const [newUser] = await db.insert(users).values({
+      username: insertUser.username,
+      password: hashedPassword,
+    }).returning();
+    return newUser;
   }
   
   // Booking Methods
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
-    const id = this.bookingId++;
-    const createdAt = new Date();
-    const booking: Booking = { 
-      ...insertBooking, 
-      id, 
-      createdAt 
-    };
-    this.bookingsStore.set(id, booking);
-    return booking;
+    const [newBooking] = await db.insert(bookings).values(insertBooking).returning();
+    return newBooking;
   }
   
   async getBooking(id: number): Promise<Booking | undefined> {
-    return this.bookingsStore.get(id);
+    const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
+    return booking;
   }
   
   async getAllBookings(): Promise<Booking[]> {
-    return Array.from(this.bookingsStore.values());
+    return db.select().from(bookings);
   }
   
   // Contact Methods
   async createContact(insertContact: InsertContact): Promise<Contact> {
-    const id = this.contactId++;
-    const createdAt = new Date();
-    const contact: Contact = { 
-      ...insertContact, 
-      id, 
-      createdAt 
-    };
-    this.contactsStore.set(id, contact);
-    return contact;
+    const [newContact] = await db.insert(contacts).values(insertContact).returning();
+    return newContact;
   }
   
   async getContact(id: number): Promise<Contact | undefined> {
-    return this.contactsStore.get(id);
+    const [contact] = await db.select().from(contacts).where(eq(contacts.id, id));
+    return contact;
   }
   
   async getAllContacts(): Promise<Contact[]> {
-    return Array.from(this.contactsStore.values());
+    return db.select().from(contacts);
   }
   
   // Job Application Methods
   async createJobApplication(insertApplication: InsertJobApplication): Promise<JobApplication> {
-    const id = this.jobApplicationId++;
-    const createdAt = new Date();
-    const jobApplication: JobApplication = { 
-      ...insertApplication, 
-      id, 
-      createdAt 
-    };
-    this.jobApplicationsStore.set(id, jobApplication);
-    return jobApplication;
+    const [newApplication] = await db.insert(jobApplications).values(insertApplication).returning();
+    return newApplication;
   }
   
   async getJobApplication(id: number): Promise<JobApplication | undefined> {
-    return this.jobApplicationsStore.get(id);
+    const [application] = await db.select().from(jobApplications).where(eq(jobApplications.id, id));
+    return application;
   }
   
   async getAllJobApplications(): Promise<JobApplication[]> {
-    return Array.from(this.jobApplicationsStore.values());
+    return db.select().from(jobApplications);
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DrizzleStorage();

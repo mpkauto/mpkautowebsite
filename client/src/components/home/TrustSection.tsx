@@ -1,43 +1,60 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Gauge, Award, DollarSign, Star, StarHalf, CheckCircle } from "lucide-react";
+// Change the component name to match the file name
+import { Star, StarHalf } from "lucide-react";
+import TestimonialsSlider from "./TestimonialsSlider.tsx";
+import CountUp from "react-countup";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
-export default function TrustSection() {
-  const trustPoints = [
-    {
-      icon: <Gauge className="h-10 w-10 text-primary" />,
-      title: "Fast Turnaround",
-      description: "Most services completed same-day, getting you back on the road quickly and comfortably."
-    },
-    {
-      icon: <Award className="h-10 w-10 text-primary" />,
-      title: "Certified Technicians",
-      description: "Our team is highly trained and certified in the latest automotive AC technologies."
-    },
-    {
-      icon: <DollarSign className="h-10 w-10 text-primary" />,
-      title: "Transparent Pricing",
-      description: "No surprises or hidden fees. We provide clear quotes before starting any work."
-    }
-  ];
-
+export default function TrustSection() { // Changed from TestimonialsSection to TrustSection
   const testimonials = [
     {
       rating: 5,
-      comment: "MPK fixed my AC in less than two hours. Great service and fair pricing! Will definitely return for future services.",
+      comment: "The team at MPK provided exceptional service. My car's AC is now colder than ever before! Highly recommended.",
       name: "Michael R.",
-      title: "Toyota Camry Owner"
+      title: "Toyota Camry Owner",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      service: "AC Repair"
     },
     {
       rating: 5,
-      comment: "As a rideshare driver, a functioning AC is essential. MPK's quick service and mobile option saved me from losing work days.",
+      comment: "Fantastic experience! MPK's mobile service was incredibly convenient and saved me a trip to the shop. Quick and efficient repair.",
       name: "Sarah L.",
-      title: "Uber Driver"
+      title: "Uber Driver",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      service: "Mobile Service"
     },
     {
       rating: 4.5,
-      comment: "The diagnostic service was thorough and they explained everything clearly. No pushy upselling like other places.",
+      comment: "Very professional diagnostic service. They accurately identified the issue and fixed it promptly. Transparent pricing was a plus.",
       name: "David K.",
-      title: "Honda CR-V Owner"
+      title: "Honda CR-V Owner",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      service: "System Diagnostics"
+    },
+    {
+      rating: 5,
+      comment: "Outstanding service from start to finish. The technician was knowledgeable and had my AC working perfectly in no time.",
+      name: "Jennifer M.",
+      title: "Nissan Altima Owner",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      service: "AC Installation"
+    },
+    {
+      rating: 4.5,
+      comment: "Had a complex AC problem, and MPK handled it with expertise. Their dedication to getting the job done right was impressive.",
+      name: "Robert T.",
+      title: "Ford F-150 Owner",
+      image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      service: "Emergency Repair"
+    },
+    // Added a new testimonial to break repetition
+    {
+      rating: 5,
+      comment: "Lifesaver! My AC went out on a trip, and MPK came to my rescue with their efficient roadside service. Back on the road comfortably.",
+      name: "Emily W.",
+      title: "Travel Blogger",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      service: "Roadside Service"
     }
   ];
 
@@ -58,8 +75,20 @@ export default function TrustSection() {
     return stars;
   };
 
+  // Use intersection observer to trigger CountUp
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2
+  });
+
+  // Animation variants for stats
+  const statsVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
-    <section className="py-24 px-6 md:px-12 bg-background relative">
+    <section className="py-12 bg-background relative px-4 sm:px-6 md:px-8" ref={ref}>
       {/* Decorative diagonal line */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-1/3 h-1/3 border-t border-l border-primary/10"></div>
@@ -67,100 +96,60 @@ export default function TrustSection() {
       </div>
       
       <div className="container mx-auto max-w-7xl relative z-10">
-        <div className="text-center mb-16 animate-fade-in-up">
-          <div className="flex items-center justify-center mb-5">
-            <div className="h-0.5 w-12 bg-primary mr-4"></div>
-            <span className="text-primary font-medium uppercase tracking-wider text-sm">Our Reputation</span>
-            <div className="h-0.5 w-12 bg-primary ml-4"></div>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Why Choose MPK
+        <div className="text-center mb-6 animate-fade-in-up">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight relative inline-block">
+            Customer Testimonials
+            <span className="absolute bottom-0 left-0 w-12 h-1 bg-primary block mt-2 rounded"></span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Join thousands of satisfied customers who trust us with their vehicle's comfort.
+          <p className="text-white/60 text-lg max-w-2xl mx-auto mt-6">
+            Hear what our satisfied customers have to say about their experience with MPK Auto Service.
           </p>
-        </div>
-        
-        {/* Trust Points */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
-          {trustPoints.map((point, index) => (
-            <div 
-              key={index} 
-              className="bg-background p-8 rounded-xl border border-border/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 animate-fade-in-up"
-              style={{animationDelay: `${index * 0.1}s`}}
-            >
-              <div className="bg-primary/5 inline-flex rounded-xl p-5 mb-6">
-                {point.icon}
-              </div>
-              <h3 className="font-bold text-2xl mb-4 text-foreground">{point.title}</h3>
-              <p className="text-muted-foreground text-lg">{point.description}</p>
-            </div>
-          ))}
         </div>
         
         {/* Testimonials */}
         <div className="bg-darker-bg p-12 rounded-2xl border border-border/20 shadow-xl">
-          <div className="text-center mb-8 animate-fade-in-up">
-            <span className="text-primary font-medium uppercase tracking-wider text-sm inline-block mb-3">Testimonials</span>
-            <h3 className="text-3xl font-bold text-foreground">
-              What Our Customers Say
-            </h3>
-          </div>
+          {/* Replace the grid with our TestimonialsSlider */}
+          <TestimonialsSlider testimonials={testimonials} />
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card 
-                key={index} 
-                className="bg-background rounded-xl border border-border/40 shadow-md hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 overflow-hidden animate-fade-in-up"
-                style={{animationDelay: `${index * 0.1}s`}}
-              >
-                <CardContent className="p-8">
-                  {/* Rating accent bar */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
-                  
-                  <div className="flex items-center mb-6">
-                    <div className="flex text-primary">
-                      {renderStars(testimonial.rating)}
-                    </div>
-                    <span className="ml-2 text-sm text-muted-foreground font-medium">{testimonial.rating}</span>
-                  </div>
-                  
-                  <p className="text-muted-foreground mb-6 text-lg italic">"{testimonial.comment}"</p>
-                  
-                  <div className="flex items-center">
-                    <div className="bg-primary/10 h-10 w-10 rounded-full flex items-center justify-center mr-3">
-                      <CheckCircle className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-foreground">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          {/* Stats row */}
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center pt-8 border-t border-border/30">
-            <div className="animate-fade-in-up">
-              <p className="text-4xl font-bold text-primary">2,500+</p>
-              <p className="text-muted-foreground">Satisfied Customers</p>
-            </div>
-            <div className="animate-fade-in-up" style={{animationDelay: "0.1s"}}>
-              <p className="text-4xl font-bold text-primary">15+</p>
-              <p className="text-muted-foreground">Years Experience</p>
-            </div>
-            <div className="animate-fade-in-up" style={{animationDelay: "0.2s"}}>
-              <p className="text-4xl font-bold text-primary">4.9</p>
-              <p className="text-muted-foreground">Average Rating</p>
-            </div>
-            <div className="animate-fade-in-up" style={{animationDelay: "0.3s"}}>
-              <p className="text-4xl font-bold text-primary">95%</p>
-              <p className="text-muted-foreground">Same-Day Repairs</p>
-            </div>
-          </div>
+          {/* Stats row with CountUp */}
+          <motion.div 
+            className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center pt-8 border-t border-border/30"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.2
+                }
+              }
+            }}
+          >
+            <motion.div variants={statsVariants}>
+              <p className="text-2xl font-semibold text-primary">
+                {inView ? <CountUp end={2500} suffix="+" duration={2} separator="," /> : "0"}
+              </p>
+              <p className="text-white/70">Satisfied Customers</p>
+            </motion.div>
+            <motion.div variants={statsVariants}>
+              <p className="text-2xl font-semibold text-primary">
+                {inView ? <CountUp end={15} suffix="+" duration={2} /> : "0"}
+              </p>
+              <p className="text-white/70">Years Experience</p>
+            </motion.div>
+            <motion.div variants={statsVariants}>
+              <p className="text-2xl font-semibold text-primary">
+                {inView ? <CountUp end={4.9} decimals={1} duration={2} /> : "0"}
+              </p>
+              <p className="text-white/70">Average Rating</p>
+            </motion.div>
+            <motion.div variants={statsVariants}>
+              <p className="text-2xl font-semibold text-primary">
+                {inView ? <CountUp end={95} suffix="%" duration={2} /> : "0"}
+              </p>
+              <p className="text-white/70">Same-Day Repairs</p>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

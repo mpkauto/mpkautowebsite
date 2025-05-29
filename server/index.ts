@@ -1,8 +1,24 @@
+import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
+import router from './routes';
 import { setupVite, serveStatic, log } from "./vite";
+import rateLimit from 'express-rate-limit';
+import { createServer } from 'http';
 
 const app = express();
+
+// Create rate limiter
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: { message: 'Too many requests from this IP, please try again later.' },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+// Apply rate limiting to all API routes
+app.use('/api', apiLimiter);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -37,14 +53,25 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const server = await registerRoutes(app);
+  // Replace this line
+  // const server = await registerRoutes(app);
+  
+  // With this
+  const server = createServer(app);
+  app.use(router);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
+    // Log the error server-side
+    console.error(`Error: ${err.message}, Status: ${status}, Path: ${req.path}`);
+    if (process.env.NODE_ENV !== 'production' && err.stack) {
+        console.error(err.stack);
+    }
+
     res.status(status).json({ message });
-    throw err;
+    // Do not re-throw the error
   });
 
   // importantly only setup vite in development and after
@@ -62,9 +89,12 @@ app.use((req, res, next) => {
   const port = 5000;
   server.listen({
     port,
-    host: "0.0.0.0",
-    reusePort: true,
+    host: "127.0.0.1",
+    // Removed reusePort option as it may not be supported on Windows
   }, () => {
     log(`serving on port ${port}`);
   });
 })();
+
+app.use(router);
+// Remove all these extra listen calls below

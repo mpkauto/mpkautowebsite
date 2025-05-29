@@ -1,76 +1,159 @@
+/* Google Fonts imports */
+/* @import url('https://fonts.googleapis.com/css2?family=Fauna+One&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); */
+
+/* Tailwind imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Dark theme as default - based on Automechanica */
-  --background: 222 47% 11%;  /* #0F172A slate navy */
-  --foreground: 210 40% 98%;  /* #F9FAFB */
-  --muted: 222 47% 20%;
-  --muted-foreground: 215 20% 65%;  /* #94A3B8 */
-  --popover: 222 47% 11%;
-  --popover-foreground: 210 40% 98%;
-  --card: 222 47% 11%;
-  --card-foreground: 210 40% 98%;
-  --border: 222 47% 20%;
-  --input: 222 47% 20%;
-  --primary: 217 91% 60%;  /* #3B82F6 vibrant blue */
-  --primary-foreground: 210 40% 98%;
-  --secondary: 222 47% 20%;
-  --secondary-foreground: 210 40% 98%;
-  --accent: 217 91% 60%; 
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --ring: 217 91% 60%;
-  --radius: 0.75rem;  /* Increased radius for rounded UI edges */
-  
-  /* Custom colors */
-  --dark-bg: 222 47% 11%;  /* #0F172A */
-  --darker-bg: 222 47% 8%;  /* Slightly darker for two-tone sections */
-  --accent-blue: 217 91% 60%;  /* #3B82F6 */
-  --ice-white: 210 40% 98%;  /* #F9FAFB */
-  --slate-gray: 215 20% 65%;  /* #94A3B8 */
-}
-
-.light {
-  --background: 0 0% 100%;
-  --foreground: 222 47% 11%;
-  --muted: 60 4.8% 95.9%;
-  --muted-foreground: 25 5.3% 44.7%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --border: 20 5.9% 90%;
-  --input: 20 5.9% 90%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 60 4.8% 95.9%;
-  --secondary-foreground: 24 9.8% 10%;
-  --accent: 217 91% 60%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --ring: 222 47% 11%;
-}
-
 @layer base {
-  * {
-    @apply border-border;
+  :root {
+    --font-sans: "Figtree", sans-serif;
+    --font-heading: "Montagu Slab", serif;
+    --font-body: "Figtree", sans-serif;
+  }
+
+  html {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.01em;
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Adjust based on your header height */
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-black text-[#F2F4F8];
   }
-  
-  /* Grid background pattern for sections */
-  .bg-grid-primary {
-    --grid-size: 30px;
-    --grid-strength: 1px;
-    background-image: 
-      linear-gradient(to right, rgba(59, 130, 246, 0.05) var(--grid-strength), transparent var(--grid-strength)),
-      linear-gradient(to bottom, rgba(59, 130, 246, 0.05) var(--grid-strength), transparent var(--grid-strength));
-    background-size: var(--grid-size) var(--grid-size);
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-weight: 600;
   }
+
+  p {
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-inter {
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/general-sans/GeneralSans-Variable.woff2') format('woff2');
+  font-weight: 200 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montagu Slab';
+  src: url('/fonts/Montagu/MontaguSlab-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/figtree/Figtree-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@layer components {
+  .tagline-italic {
+    @apply font-body text-[#9B9B9B] text-sm italic tracking-wide mt-6 mb-2;
+  }
+
+  .tagline-uppercase {
+    @apply font-body text-[#9B9B9B] text-sm uppercase tracking-widest mt-6 mb-2;
+  }
+
+  /* Typography Scale with Contrast */
+  .hero-heading {
+    @apply font-heading text-6xl font-medium tracking-tight text-white;
+  }
+
+  .section-title {
+    @apply font-heading text-3xl font-medium uppercase tracking-wide text-white;
+  }
+
+  .body-text {
+    @apply font-body text-base leading-relaxed text-[#E5E5E5];
+  }
+
+  .body-text-muted {
+    @apply font-body text-base leading-relaxed text-[#B0B0B0];
+  }
+
+  .subtext {
+    @apply font-body text-sm text-[#9B9B9B];
+  }
+
+  .metadata {
+    @apply font-body text-sm text-[#808080] tracking-wide;
+  }
+
+  .cta-text {
+    @apply font-heading text-sm font-medium uppercase tracking-wide text-white;
+  }
+
+  /* Brand Signature */
+  .brand-signature {
+    @apply font-heading text-sm uppercase tracking-[0.15em] text-[#C0C0C0]/80;
+  }
+
+  /* Enhanced Button Typography */
+  .button-text {
+    @apply font-heading text-sm font-medium uppercase tracking-[0.1em] leading-none;
+  }
+
+  .button-text-lg {
+    @apply font-heading text-base font-medium uppercase tracking-[0.1em] leading-none;
+  }
+
+  /* Additional Typography Utilities */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-[#E5E5E5];
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Emphasis Levels */
+  .text-emphasis-high {
+    @apply text-white font-medium;
+  }
+
+  .text-emphasis-medium {
+    @apply text-[#E5E5E5] font-normal;
+  }
+
+  .text-emphasis-low {
+    @apply text-[#B0B0B0] font-normal;
+  }
+}
+
+/* Add this to ensure content is not hidden by fixed header when using anchor links */
+[id] {
+  scroll-margin-top: 80px;
 }

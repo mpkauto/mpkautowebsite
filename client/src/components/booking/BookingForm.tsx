@@ -1,12 +1,15 @@
+// client/src/components/booking/BookingForm.tsx
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
 import { Loader2 } from "lucide-react";
-import { getServiceOptions, getTimeSlots } from "@/lib/utils";
-import { insertBookingSchema } from "@shared/schema";
+import { getTimeSlots, cn } from "@/lib/utils";
+import toast from "react-hot-toast";
+
+import { insertBookingSchema, type InsertBooking } from "@shared/schema";
+import { createBooking } from "@/services/bookingService";
 
 import {
   Form,
@@ -27,11 +30,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// Hardcoded for now; can be fetched from Supabase if needed
+const serviceOptions = [
+  "Basic Service",
+  "Full Service",
+  "Premium Service",
+];
+
 export default function BookingForm() {
-  const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
-  const form = useForm({
+
+  const form = useForm<InsertBooking>({
     resolver: zodResolver(insertBookingSchema),
     defaultValues: {
       name: "",
@@ -45,30 +54,20 @@ export default function BookingForm() {
     },
   });
 
-  const bookingMutation = useMutation({
-    mutationFn: async (data: any) => {
-      return apiRequest("POST", "/api/bookings", data);
-    },
+  const mutation = useMutation({
+    mutationFn: createBooking,
     onSuccess: () => {
-      toast({
-        title: "Booking submitted!",
-        description: "We'll contact you shortly to confirm your appointment.",
-        variant: "default",
-      });
-      form.reset();
+      toast.success("Booking submitted!");
       setIsSubmitted(true);
     },
-    onError: (error) => {
-      toast({
-        title: "Something went wrong.",
-        description: error.message || "Please try again later.",
-        variant: "destructive",
-      });
+    onError: (err: any) => {
+      console.error("Booking error:", err);
+      toast.error("An unexpected error occurred. Please try again.");
     },
   });
 
-  function onSubmit(data: any) {
-    bookingMutation.mutate(data);
+  function onSubmit(data: InsertBooking) {
+    mutation.mutate(data);
   }
 
   if (isSubmitted) {
@@ -76,9 +75,9 @@ export default function BookingForm() {
       <div className="bg-green-50 p-6 rounded-lg text-center">
         <h3 className="text-2xl font-bold text-green-700 mb-2">Thank You!</h3>
         <p className="text-green-600 mb-4">
-          Your booking request has been received. We'll contact you shortly to confirm your appointment.
+          Your booking request has been received. We'll contact you shortly.
         </p>
-        <Button 
+        <Button
           onClick={() => setIsSubmitted(false)}
           variant="outline"
           className="mx-auto"
@@ -91,29 +90,47 @@ export default function BookingForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6 bg-darker-bg p-8 md:p-12 rounded-xl border border-border/30 shadow-lg"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full Name</FormLabel>
+                <FormLabel className="text-white">Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Smith" {...field} />
+                  <Input
+                    placeholder="John Smith"
+                    {...field}
+                    className={cn(
+                      "text-white placeholder:text-gray-400",
+                      form.formState.errors.name && "border-red-500"
+                    )}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number</FormLabel>
+                <FormLabel className="text-white">Phone Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="(123) 456-7890" {...field} />
+                  <Input
+                    placeholder="(123) 456-7890"
+                    {...field}
+                    className={cn(
+                      "text-white placeholder:text-gray-400",
+                      form.formState.errors.phone && "border-red-500"
+                    )}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -126,9 +143,16 @@ export default function BookingForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Address</FormLabel>
+              <FormLabel className="text-white">Email Address</FormLabel>
               <FormControl>
-                <Input placeholder="your.email@example.com" {...field} />
+                <Input
+                  placeholder="your.email@example.com"
+                  {...field}
+                  className={cn(
+                    "text-white placeholder:text-gray-400",
+                    form.formState.errors.email && "border-red-500"
+                  )}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -141,9 +165,16 @@ export default function BookingForm() {
             name="vehicleInfo"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Vehicle Make & Model</FormLabel>
+                <FormLabel className="text-white">Vehicle Info</FormLabel>
                 <FormControl>
-                  <Input placeholder="Toyota Camry 2018" {...field} />
+                  <Input
+                    placeholder="Toyota Camry 2018"
+                    {...field}
+                    className={cn(
+                      "text-white placeholder:text-gray-400",
+                      form.formState.errors.vehicleInfo && "border-red-500"
+                    )}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -154,17 +185,20 @@ export default function BookingForm() {
             name="serviceType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Service Needed</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormLabel className="text-white">Service Needed</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="text-white">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {getServiceOptions().map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
+                    {serviceOptions.map((label) => (
+                      <SelectItem key={label} value={label}>
+                        {label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -181,9 +215,16 @@ export default function BookingForm() {
             name="preferredDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Preferred Date</FormLabel>
+                <FormLabel className="text-white">Preferred Date</FormLabel>
                 <FormControl>
-                  <Input type="date" {...field} />
+                  <Input
+                    type="date"
+                    {...field}
+                    className={cn(
+                      "text-white",
+                      form.formState.errors.preferredDate && "border-red-500"
+                    )}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -194,10 +235,13 @@ export default function BookingForm() {
             name="preferredTime"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Preferred Time</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormLabel className="text-white">Preferred Time</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="text-white">
                       <SelectValue placeholder="Select a time" />
                     </SelectTrigger>
                   </FormControl>
@@ -220,12 +264,12 @@ export default function BookingForm() {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Additional Notes</FormLabel>
+              <FormLabel className="text-white">Additional Notes</FormLabel>
               <FormControl>
-                <Textarea 
-                  placeholder="Tell us about your AC issues or any special requirements" 
-                  className="resize-none" 
-                  {...field} 
+                <Textarea
+                  placeholder="Tell us more about the issue"
+                  className="resize-none text-white placeholder:text-gray-400"
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -233,11 +277,15 @@ export default function BookingForm() {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={bookingMutation.isPending}>
-          {bookingMutation.isPending ? (
+        <Button
+          type="submit"
+          disabled={mutation.isPending}
+          className="w-full bg-brand-accent hover:bg-brand-accent/90 text-white font-bold py-2 px-4 rounded-md"
+        >
+          {mutation.isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Processing...
+              Submitting...
             </>
           ) : (
             "Book Appointment"

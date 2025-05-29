@@ -1,84 +1,124 @@
+import { Wrench, Thermometer, Droplets, Gauge, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { Card, CardContent } from "@/components/ui/card";
-import { Search, Droplet, Bolt, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ServicesSection() {
   const services = [
     {
-      icon: <Search className="h-12 w-12" />,
-      title: "AC Diagnostic Check",
-      description: "Comprehensive inspection of your vehicle's AC system to identify any issues.",
-      price: "From $59",
-      link: "/book"
+      icon: <Thermometer className="text-brand-contrastText text-4xl mb-4" strokeWidth={1.5} />,
+      title: "AC Installation",
+      description: "Professional installation of new AC systems with precise fitting and optimal performance setup.",
+      slug: "ac-installation"
     },
     {
-      icon: <Droplet className="h-12 w-12" />,
-      title: "Refrigerant Refill",
-      description: "Professional recharging of your AC refrigerant to restore cooling performance.",
-      price: "From $89",
-      link: "/book"
+      icon: <Wrench className="text-brand-contrastText text-4xl mb-4" strokeWidth={1.5} />,
+      title: "AC Repair & Maintenance",
+      description: "Complete repair services for all vehicle AC systems with quality parts and warranty.",
+      slug: "ac-repair-maintenance"
     },
     {
-      icon: <Bolt className="h-12 w-12" />,
-      title: "Full System Repair",
-      description: "Complete repair and replacement services for all AC components and systems.",
-      price: "From $149",
-      link: "/book"
+      icon: <Droplets className="text-brand-contrastText text-4xl mb-4" strokeWidth={1.5} />,
+      title: "Duct Cleaning",
+      description: "Thorough cleaning of ventilation ducts to improve air quality and system efficiency.",
+      slug: "duct-cleaning"
+    },
+    {
+      icon: <Gauge className="text-brand-contrastText text-4xl mb-4" strokeWidth={1.5} />,
+      title: "System Diagnostics",
+      description: "Advanced diagnostic services to identify issues and provide accurate solutions.",
+      slug: "system-diagnostics"
     }
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
-    <section id="services" className="py-24 px-6 md:px-12 bg-darker-bg relative">
-      {/* Decorative element */}
-      <div className="absolute top-0 left-1/2 w-0.5 h-24 bg-primary/20 -translate-x-1/2"></div>
-      
-      <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-16 animate-fade-in-up">
-          {/* Section title with line decoration */}
-          <div className="flex items-center justify-center mb-5">
-            <div className="h-0.5 w-12 bg-primary mr-4"></div>
-            <span className="text-primary font-medium uppercase tracking-wider text-sm">Professional Services</span>
-            <div className="h-0.5 w-12 bg-primary ml-4"></div>
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }} 
+      viewport={{ once: true }} 
+    >
+      <section className="bg-grayDark text-white py-20 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          {/* Section label */}
+          <div className="text-center space-y-6">
+            <p className="text-sm uppercase tracking-wide text-primary mb-2">Our Services</p>
+            
+            <h2 className="text-4xl font-semibold tracking-tight mb-6">
+              Premium Auto AC Services
+            </h2>
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Our Services
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Professional auto air conditioning services to keep you comfortable in any weather.
-          </p>
+          {/* Services grid - already has staggered animations */}
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 space-y-0"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {services.map((service, index) => (
+              <Link key={index} href={`/services/${service.slug}`}>
+                <motion.div 
+                  variants={itemVariants}
+                  whileHover="hover"
+                  initial="rest"
+                  animate="rest"
+                  className="flex flex-col h-full bg-graySoft p-6 rounded-xl border border-transparent shadow-md transition-all duration-300 group cursor-pointer overflow-hidden relative hover:border-brand-accent/50 hover:shadow-lg hover:shadow-brand-accent/20">
+                  <div className="relative z-10 flex justify-center w-full">
+                    {service.icon}
+                  </div>
+                  
+                  <h3 className="relative z-10 text-2xl font-medium text-white mt-4 text-center">{service.title}</h3>
+                  
+                  <p className="relative z-10 text-base text-brand-contrastText mt-2 leading-relaxed flex-grow text-center">
+                    {service.description}
+                  </p>
+                  
+                  <div className="relative z-10 mt-auto text-base text-brand-contrastText group-hover:underline opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-1 pt-4 hover:text-brand-accent">
+                    Learn More <ChevronRight size={16} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
+          </motion.div>
+          
+          {/* CTA Button */}
+          <motion.div 
+            className="text-center mt-8 md:mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <Link href="/services">
+              <Button 
+                variant="default"
+                size="lg"
+                className="w-full sm:w-auto font-medium hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
+              >
+                Explore All Services
+              </Button>
+            </Link>
+          </motion.div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <Card 
-              key={index} 
-              className="bg-background rounded-lg shadow-md hover:shadow-lg hover:shadow-primary/5 hover:translate-y-[-5px] transition-all duration-300 border border-border/40 overflow-hidden group animate-fade-in-up"
-              style={{animationDelay: `${index * 0.1}s`}}
-            >
-              <CardContent className="p-8 relative">
-                {/* Accent border */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                
-                <div className="text-primary mb-6 p-4 bg-primary/5 inline-block rounded-lg">
-                  {service.icon}
-                </div>
-                <h3 className="text-2xl font-bold mb-3 text-foreground">{service.title}</h3>
-                <p className="text-muted-foreground mb-6">{service.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-foreground font-bold text-xl">{service.price}</span>
-                  <Link href={service.link}>
-                    <div className="text-primary hover:text-primary/90 font-medium transition-colors cursor-pointer group/link flex items-center">
-                      <span>Book Now</span>
-                      <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
-                    </div>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
+    </motion.div>
   );
 }

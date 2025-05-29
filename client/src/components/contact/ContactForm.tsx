@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast";
+// Remove this import
+// import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Loader2 } from "lucide-react";
 import { insertContactSchema } from "@shared/schema";
+import toast from "react-hot-toast";
+import { cn } from "@/lib/utils";
 
 import {
   Form,
@@ -20,13 +23,15 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function ContactForm() {
-  const { toast } = useToast();
+  // This line is already removed
+  // const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   
   const form = useForm({
     resolver: zodResolver(insertContactSchema),
     defaultValues: {
       name: "",
+      phone: "",
       email: "",
       message: "",
     },
@@ -37,20 +42,14 @@ export default function ContactForm() {
       return apiRequest("POST", "/api/contacts", data);
     },
     onSuccess: () => {
-      toast({
-        title: "Message sent!",
-        description: "We'll get back to you as soon as possible.",
-        variant: "default",
-      });
+      // Change this line
+      toast.success("Message sent successfully!");
       form.reset();
       setIsSubmitted(true);
     },
     onError: (error) => {
-      toast({
-        title: "Something went wrong.",
-        description: error.message || "Please try again later.",
-        variant: "destructive",
-      });
+      // Change this line
+      toast.error(error.message || "Please try again later.");
     },
   });
 
@@ -86,7 +85,34 @@ export default function ContactForm() {
             <FormItem>
               <FormLabel>Your Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Smith" {...field} />
+                <Input 
+                  placeholder="John Smith" 
+                  {...field} 
+                  className={cn(
+                    form.formState.errors.name && "border-red-500 focus-visible:ring-red-500"
+                  )}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone Number</FormLabel>
+              <FormControl>
+                <Input 
+                  type="tel"
+                  placeholder="+1 (555) 000-0000" 
+                  {...field} 
+                  className={cn(
+                    form.formState.errors.phone && "border-red-500 focus-visible:ring-red-500"
+                  )}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -100,7 +126,13 @@ export default function ContactForm() {
             <FormItem>
               <FormLabel>Email Address</FormLabel>
               <FormControl>
-                <Input placeholder="your.email@example.com" {...field} />
+                <Input 
+                  placeholder="your.email@example.com" 
+                  {...field} 
+                  className={cn(
+                    form.formState.errors.email && "border-red-500 focus-visible:ring-red-500"
+                  )}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -116,7 +148,10 @@ export default function ContactForm() {
               <FormControl>
                 <Textarea 
                   placeholder="How can we help you?" 
-                  className="resize-none min-h-[150px]" 
+                  className={cn(
+                    "resize-none min-h-[150px]",
+                    form.formState.errors.message && "border-red-500 focus-visible:ring-red-500"
+                  )}
                   {...field} 
                 />
               </FormControl>
@@ -125,7 +160,11 @@ export default function ContactForm() {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={contactMutation.isPending}>
+        <Button 
+          type="submit" 
+          className="w-full" 
+          disabled={contactMutation.isPending}
+        >
           {contactMutation.isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

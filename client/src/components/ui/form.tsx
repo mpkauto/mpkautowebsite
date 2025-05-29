@@ -14,6 +14,8 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import { VariantProps } from "tailwind-variants"
+import { labelVariants } from "@/lib/variants"
 
 const Form = FormProvider
 
