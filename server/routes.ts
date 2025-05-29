@@ -7,7 +7,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import { db } from "./db";
-import { supabase } from "../client/src/lib/supabaseClient";
+import { supabase } from "./config/supabase";
 import express from "express";
 
 const router = express.Router();
