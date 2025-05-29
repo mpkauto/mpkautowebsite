@@ -15,7 +15,7 @@ import SymptomsPage from "@/pages/Symptoms";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import ServicesPage from "@/pages/Services";
 import CaseStudiesPage from "@/pages/CaseStudies";
-import FAQPage from "@/pages/FAQ";
+import FAQPage from "@/pages/faq";
 
 // Create a client
 const queryClient = new QueryClient();
