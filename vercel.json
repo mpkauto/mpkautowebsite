@@ -6,7 +6,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "client/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
@@ -47,26 +47,28 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/index.ts",
+      "dest": "/server/index.ts",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
       "headers": {
         "x-rate-limit-limit": "100",
         "x-rate-limit-reset": "60",
-        "x-rate-limit-remaining": "100"
-      }
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "server/index.ts",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"],
-      "headers": {
+        "x-rate-limit-remaining": "100",
         "x-content-type-options": "nosniff",
         "x-frame-options": "DENY",
         "x-xss-protection": "1; mode=block"
       }
     },
     {
+      "src": "/assets/(.*)",
+      "dest": "/dist/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/dist/favicon.ico"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/dist/$1"
+      "dest": "/dist/index.html"
     }
   ]
 }
