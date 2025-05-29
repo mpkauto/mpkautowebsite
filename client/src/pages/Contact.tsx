@@ -1,5 +1,5 @@
 import ContactForm from "@/components/contact/ContactForm";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function Contact() {
