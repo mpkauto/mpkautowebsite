@@ -1,14 +1,12 @@
 import HeroSection from "@/components/home/HeroSection";
-import ServicesSection from "@/components/home/ServicesSection";
 import SymptomsSection from "@/components/home/SymptomsSection";
-import CaseStudiesSection from "@/components/home/CaseStudiesSection";
 import ValuePropositionSection from "@/components/home/ValuePropositionSection";
-import HowItWorksSection from "@/components/home/HowItWorksSection";
 import PromotionalBanner from "@/components/home/PromotionalBanner";
 import FAQSection from "@/components/home/FAQSection";
 import BrandLogosGrid from "@/components/home/BrandLogosGrid";
 import { Helmet } from "react-helmet-async";
 import ServicesGridSection from "@/components/home/ServicesGridSection";
+import CaseStudiesSection from "@/components/home/CaseStudiesSection";
 import StatsSection from "@/components/home/StatsSection";
 import { Divider } from "@/components/ui/divider";
 

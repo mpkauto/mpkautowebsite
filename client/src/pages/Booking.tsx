@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { motion } from "framer-motion";
-import { useSearchParams } from "wouter";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,11 +8,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
 import { CalendarIcon, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollAnimation } from "@/components/ui/scroll-animation";
-import { createBooking, type BookingFormData } from "@/services/bookingService";
+import { createBooking } from "@/services/bookingService";
+import type { InsertBooking } from "@shared/schema";
 import { toast } from "react-hot-toast";
 
 const timeSlots = [
@@ -23,40 +22,34 @@ const timeSlots = [
   "4:00 PM - 6:00 PM",
 ];
 
-const acIssues = [
-  "Not Cooling",
-  "Unusual Noise",
-  "Bad Odor",
-  "Water Leak",
-  "Weak Airflow",
-  "System Not Working",
-  "Other",
-];
+
 
 export default function BookingPage() {
-  const [searchParams] = useSearchParams();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<BookingFormData>({
+  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<InsertBooking>({
     defaultValues: {
-      fullName: "",
-      phoneNumber: "",
+      name: "",
+      phone: "",
       email: "",
-      vehicleDetails: "",
-      acIssue: "",
-      preferredDate: undefined,
-      timeSlot: "",
-      location: "",
-      additionalNotes: "",
+      vehicleInfo: "",
+      serviceType: "",
+      preferredDate: "",
+      preferredTime: "",
+      notes: "",
     }
   });
+  
+  const serviceType = watch("serviceType");
+  const preferredDate = watch("preferredDate");
+  const preferredTime = watch("preferredTime");
 
-  const onSubmit = async (data: BookingFormData) => {
+  const onSubmit: SubmitHandler<InsertBooking> = async (data) => {
     try {
       setIsSubmitting(true);
       
       // Call our Supabase service to create the booking
-      const { data: bookingData, error } = await createBooking(data);
+      const { error } = await createBooking(data);
       
       if (error) {
         toast.error("Failed to submit booking. Please try again.");
@@ -125,26 +118,28 @@ export default function BookingPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
                 <Input
-                  {...register("fullName", { required: "Full name is required" })}
-                  className={cn("w-full", errors.fullName && "border-red-500")}
+                  {...register("name", { required: "Name is required" })}
+                  className={cn("w-full", errors.name && "border-red-500")}
                 />
-                {errors.fullName && (
-                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.fullName.message}</p>
+                {errors.name && (
+                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.name.message}</p>
                 )}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Phone Number</label>
                 <Input
-                  {...register("phoneNumber", { required: "Phone number is required" })}
-                  onChange={(e) => {
-                    const formatted = formatPhoneNumber(e.target.value);
-                    e.target.value = formatted;
-                  }}
-                  className={cn("w-full", errors.phoneNumber && "border-red-500")}
+                  {...register("phone", { 
+                    required: "Phone number is required",
+                    onChange: (e) => {
+                      const formatted = formatPhoneNumber(e.target.value);
+                      e.target.value = formatted;
+                    }
+                  })}
+                  className={cn("w-full", errors.phone && "border-red-500")}
                 />
-                {errors.phoneNumber && (
-                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.phoneNumber.message}</p>
+                {errors.phone && (
+                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.phone.message}</p>
                 )}
               </div>
 
@@ -168,33 +163,32 @@ export default function BookingPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Vehicle Make</label>
                 <Input
-                  {...register("vehicleDetails", { required: "Vehicle details are required" })}
-                  className={cn("w-full", errors.vehicleDetails && "border-red-500")}
+                  {...register("vehicleInfo", { required: "Vehicle information is required" })}
+                  className={cn("w-full", errors.vehicleInfo && "border-red-500")}
                 />
-                {errors.vehicleDetails && (
-                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.vehicleDetails.message}</p>
+                {errors.vehicleInfo && (
+                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.vehicleInfo.message}</p>
                 )}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">AC Issue</label>
                 <Select
-                  onValueChange={(value) => setValue("acIssue", value)}
-                  defaultValue={watch("acIssue")}
+                  onValueChange={(value) => setValue("serviceType", value)}
+                  value={serviceType}
                 >
-                  <SelectTrigger className={cn("w-full", errors.acIssue && "border-red-500")}>
-                    <SelectValue placeholder="Select AC issue" />
+                  <SelectTrigger className={cn("w-full", errors.serviceType && "border-red-500")}>
+                    <SelectValue placeholder="Select service type" />
                   </SelectTrigger>
                   <SelectContent>
-                    {acIssues.map((issue) => (
-                      <SelectItem key={issue} value={issue}>
-                        {issue}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="AC Repair">AC Repair</SelectItem>
+                    <SelectItem value="AC Service">AC Service</SelectItem>
+                    <SelectItem value="AC Gas Refill">AC Gas Refill</SelectItem>
+                    <SelectItem value="AC Diagnosis">AC Diagnosis</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.acIssue && (
-                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.acIssue.message}</p>
+                {errors.serviceType && (
+                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.serviceType.message}</p>
                 )}
               </div>
 
@@ -206,13 +200,13 @@ export default function BookingPage() {
                       variant="outline"
                       className={cn(
                         "w-full justify-start text-left font-normal bg-black text-white border border-white/10",
-                        !watch("preferredDate") && "text-slate-400",
+                        !preferredDate && "text-slate-400",
                         errors.preferredDate && "border-red-500"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {watch("preferredDate") ? (
-                        format(watch("preferredDate"), "PPP")
+                      {preferredDate ? (
+                        new Date(preferredDate).toLocaleDateString()
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -221,8 +215,8 @@ export default function BookingPage() {
                   <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
-                      selected={watch("preferredDate")}
-                      onSelect={(date: Date | undefined) => date && setValue("preferredDate", date)}
+                      selected={preferredDate ? new Date(preferredDate) : undefined}
+                      onSelect={(date) => date && setValue("preferredDate", date.toISOString().split('T')[0])}
                       disabled={(date) => date < new Date()}
                       initialFocus
                     />
@@ -236,10 +230,10 @@ export default function BookingPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Time Slot</label>
                 <Select
-                  onValueChange={(value) => setValue("timeSlot", value)}
-                  defaultValue={watch("timeSlot")}
+                  onValueChange={(value) => setValue("preferredTime", value)}
+                  value={preferredTime}
                 >
-                  <SelectTrigger className={cn("w-full", errors.timeSlot && "border-red-500")}>
+                  <SelectTrigger className={cn("w-full", errors.preferredTime && "border-red-500")}>
                     <SelectValue placeholder="Select time slot" />
                   </SelectTrigger>
                   <SelectContent>
@@ -250,28 +244,17 @@ export default function BookingPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.timeSlot && (
-                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.timeSlot.message}</p>
-                )}
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-900 mb-2">Your Location / Address</label>
-                <Input
-                  {...register("location", { required: "Location is required" })}
-                  className={cn("w-full", errors.location && "border-red-500")}
-                />
-                {errors.location && (
-                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.location.message}</p>
+                {errors.preferredTime && (
+                  <p className="text-base text-brand-contrastText mt-1 text-red-500">{errors.preferredTime.message}</p>
                 )}
               </div>
 
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-900 mb-2">Additional Notes (Optional)</label>
                 <Textarea
-                  {...register("additionalNotes")}
-                  rows={4}
-                  className="w-full"
+                  {...register("notes")}
+                  placeholder="Any special instructions or additional information"
+                  className="min-h-[100px]"
                 />
               </div>
             </div>
