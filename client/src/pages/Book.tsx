@@ -1,5 +1,5 @@
 import BookingForm from "@/components/booking/BookingForm";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Calendar, Clock, CheckCircle, Car, Phone, Mail } from "lucide-react";
 import { ScrollAnimation } from "@/components/ui/scroll-animation";
 import { motion } from "framer-motion";

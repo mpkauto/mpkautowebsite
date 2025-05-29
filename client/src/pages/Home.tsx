@@ -7,7 +7,7 @@ import HowItWorksSection from "@/components/home/HowItWorksSection";
 import PromotionalBanner from "@/components/home/PromotionalBanner";
 import FAQSection from "@/components/home/FAQSection";
 import BrandLogosGrid from "@/components/home/BrandLogosGrid";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import ServicesGridSection from "@/components/home/ServicesGridSection";
 import StatsSection from "@/components/home/StatsSection";
 import { Divider } from "@/components/ui/divider";

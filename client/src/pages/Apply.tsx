@@ -1,5 +1,5 @@
 import JobApplicationForm from "@/components/careers/JobApplicationForm";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import ScrollAnimation from "react-scroll-animation";
 
 export default function Apply() {
