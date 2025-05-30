@@ -16,33 +16,11 @@ const commonDeps = [
   'class-variance-authority',
   'tailwind-merge',
   'tailwindcss-animate',
-  // Radix UI packages
-  '@radix-ui/react-accordion',
-  '@radix-ui/react-alert-dialog',
-  '@radix-ui/react-aspect-ratio',
-  '@radix-ui/react-avatar',
-  '@radix-ui/react-checkbox',
-  '@radix-ui/react-collapsible',
-  '@radix-ui/react-context-menu',
-  '@radix-ui/react-dialog',
-  '@radix-ui/react-dropdown-menu',
-  '@radix-ui/react-hover-card',
-  '@radix-ui/react-label',
-  '@radix-ui/react-menubar',
-  '@radix-ui/react-navigation-menu',
-  '@radix-ui/react-popover',
-  '@radix-ui/react-progress',
-  '@radix-ui/react-radio-group',
-  '@radix-ui/react-scroll-area',
+  // Radix UI packages - explicitly list all used components
   '@radix-ui/react-select',
-  '@radix-ui/react-separator',
-  '@radix-ui/react-slot',
-  '@radix-ui/react-switch',
-  '@radix-ui/react-tabs',
-  '@radix-ui/react-toast',
-  '@radix-ui/react-toggle',
-  '@radix-ui/react-toggle-group',
-  '@radix-ui/react-tooltip',
+  '@radix-ui/react-dialog',
+  '@radix-ui/react-popover',
+  // Add other Radix UI packages as needed
 ];
 
 export default defineConfig({
@@ -57,48 +35,27 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
-      external: (id) => {
-        // Externalize node built-ins
-        if (id.startsWith('node:')) {
-          return true;
-        }
-        
-        // Don't externalize any other dependencies - bundle them
-        return false;
-      },
+      // Don't externalize any dependencies - bundle everything
+      external: [],
       output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            // Group React related dependencies
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
-              return 'react-vendor';
-            }
-            
-            // Group Radix UI packages
-            if (id.includes('@radix-ui')) {
-              return 'radix-ui';
-            }
-            
-            // Group date related dependencies
-            if (id.includes('date-fns') || id.includes('react-day-picker')) {
-              return 'date-vendor';
-            }
-            
-            // Group UI related dependencies
-            if (id.includes('framer-motion') || id.includes('lucide-react') || id.includes('tailwind')) {
-              return 'ui-vendor';
-            }
-            
-            // Default vendor chunk
-            return 'vendor';
-          }
+        manualChunks: {
+          // Create a separate chunk for Radix UI
+          'radix-ui': ['@radix-ui/react-select', '@radix-ui/react-dialog', '@radix-ui/react-popover'],
+          // Create a separate chunk for React
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          // Create a separate chunk for date libraries
+          'date-vendor': ['date-fns', 'react-day-picker'],
+          // Group other UI libraries
+          'ui-vendor': ['framer-motion', 'lucide-react', 'tailwind-merge', 'tailwindcss-animate'],
+          // Group other dependencies
+          'vendor': ['zod', '@tanstack/react-query', 'class-variance-authority']
         },
       },
     },
     commonjsOptions: {
       include: [/node_modules/],
       transformMixedEsModules: true,
-      esmExternals: false, // Disable ESM externals to ensure proper bundling
+      esmExternals: false,
     },
   },
   optimizeDeps: {
