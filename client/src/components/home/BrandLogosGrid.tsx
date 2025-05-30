@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { MapPin } from 'lucide-react';
 
 export default function BrandLogosGrid() {
@@ -42,38 +40,52 @@ export default function BrandLogosGrid() {
         </h2>
 
         {/* Logo Carousel */}
-        <div className="relative">
+        <div className="relative px-4">
           <Swiper
-            modules={[Autoplay, Navigation, Pagination]}
-            spaceBetween={30}
-            slidesPerView={'auto'}
+            modules={[Autoplay]}
+            spaceBetween={40}
+            slidesPerView={2}
             loop={true}
             autoplay={{
-              delay: 0,
+              delay: 1500,
               disableOnInteraction: false,
+              pauseOnMouseEnter: true,
             }}
-            speed={3000}
+            speed={1000}
             breakpoints={{
-              640: {
+              480: {
                 slidesPerView: 3,
+                spaceBetween: 40,
+              },
+              640: {
+                slidesPerView: 4,
+                spaceBetween: 50,
               },
               768: {
-                slidesPerView: 4,
+                slidesPerView: 5,
+                spaceBetween: 50,
               },
               1024: {
-                slidesPerView: 5,
+                slidesPerView: 6,
+                spaceBetween: 60,
+              },
+              1280: {
+                slidesPerView: 7,
+                spaceBetween: 70,
               },
             }}
-            className="brand-logos-swiper"
+            className="w-full py-8"
           >
             {brands.map((brand, index) => (
-              <SwiperSlide key={index} className="!w-auto">
-                <div className="bg-white p-4 rounded-lg shadow-sm flex items-center justify-center grayscale hover:grayscale-0 hover:opacity-80 transition-all duration-300">
+              <SwiperSlide key={index} className="!flex items-center justify-center">
+                <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm flex items-center justify-center grayscale hover:grayscale-0 hover:opacity-100 opacity-90 hover:scale-105 transition-all duration-300 ease-in-out">
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="h-12 w-auto object-contain"
+                    className="h-10 sm:h-12 w-auto max-w-[120px] object-contain"
                     loading="lazy"
+                    width={120}
+                    height={48}
                   />
                 </div>
               </SwiperSlide>
