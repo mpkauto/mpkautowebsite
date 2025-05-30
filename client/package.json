@@ -1,5 +1,5 @@
 {
-  "name": "mpkautoservice-client",
+  "name": "mpkautoservice",
   "private": true,
   "version": "1.0.0",
   "type": "module",

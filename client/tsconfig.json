@@ -15,12 +15,22 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@shared/*": ["src/shared/*"]
+      "@/*": ["./src/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", "build"]
 }
