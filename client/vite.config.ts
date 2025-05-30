@@ -2,8 +2,21 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// List of all Radix UI packages
-const radixPackages = [
+// Common dependencies to optimize
+const commonDeps = [
+  'react',
+  'react-dom',
+  'react-router-dom',
+  'react-day-picker',
+  'date-fns',
+  'lucide-react',
+  'framer-motion',
+  'zod',
+  '@tanstack/react-query',
+  'class-variance-authority',
+  'tailwind-merge',
+  'tailwindcss-animate',
+  // Radix UI packages
   '@radix-ui/react-accordion',
   '@radix-ui/react-alert-dialog',
   '@radix-ui/react-aspect-ratio',
@@ -32,22 +45,6 @@ const radixPackages = [
   '@radix-ui/react-tooltip',
 ];
 
-// Common dependencies to optimize
-const commonDeps = [
-  'react',
-  'react-dom',
-  'react-router-dom',
-  'react-day-picker',
-  'date-fns',
-  'lucide-react',
-  'framer-motion',
-  'zod',
-  '@tanstack/react-query',
-  'class-variance-authority',
-  'tailwind-merge',
-  'tailwindcss-animate',
-];
-
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -61,34 +58,25 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       external: (id) => {
-        // Externalize all Radix UI packages
-        if (radixPackages.some(pkg => id === pkg || id.startsWith(`${pkg}/`))) {
-          return true;
-        }
-        
-        // Externalize common dependencies
-        if (commonDeps.some(dep => id === dep || id.startsWith(`${dep}/`))) {
-          return true;
-        }
-        
         // Externalize node built-ins
         if (id.startsWith('node:')) {
           return true;
         }
         
+        // Don't externalize any other dependencies - bundle them
         return false;
       },
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            // Group Radix UI packages
-            if (radixPackages.some(pkg => id.includes(pkg))) {
-              return 'radix-ui';
-            }
-            
             // Group React related dependencies
             if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
               return 'react-vendor';
+            }
+            
+            // Group Radix UI packages
+            if (id.includes('@radix-ui')) {
+              return 'radix-ui';
             }
             
             // Group date related dependencies
@@ -97,10 +85,7 @@ export default defineConfig({
             }
             
             // Group UI related dependencies
-            if (id.includes('@radix-ui') || 
-                id.includes('framer-motion') || 
-                id.includes('lucide-react') ||
-                id.includes('tailwind')) {
+            if (id.includes('framer-motion') || id.includes('lucide-react') || id.includes('tailwind')) {
               return 'ui-vendor';
             }
             
@@ -113,24 +98,16 @@ export default defineConfig({
     commonjsOptions: {
       include: [/node_modules/],
       transformMixedEsModules: true,
-      esmExternals: true,
+      esmExternals: false, // Disable ESM externals to ensure proper bundling
     },
   },
   optimizeDeps: {
-    include: [
-      ...commonDeps,
-      ...radixPackages,
-      'react-helmet-async',
-      'react-hook-form',
-      'react-hot-toast',
-      'react-intersection-observer',
-      'swiper',
-      'wouter',
-    ],
+    include: commonDeps,
     exclude: ['@eslint/config-array', 'esbuild'],
   },
   ssr: {
-    noExternal: ['@radix-ui/*'],
+    // Bundle all dependencies for SSR
+    noExternal: true,
   },
   server: {
     port: 3000,
