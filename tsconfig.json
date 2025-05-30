@@ -19,10 +19,11 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@shared/*": ["src/shared/*"]
+      "@/*": ["client/src/*"],
+      "@shared/*": ["client/src/shared/*"],
+      "@assets/*": ["client/attached_assets/*"]
     }
   },
-  "include": ["src", "server"],
+  "include": ["client", "server"],
   "exclude": ["node_modules"]
 }
