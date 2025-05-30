@@ -1,4 +1,5 @@
 import express, { type Express } from 'express';
+import rateLimit from 'express-rate-limit';
 import fs from 'fs';
 import path from 'path';
 import { createServer as createViteServer, createLogger } from 'vite';
@@ -69,7 +70,12 @@ export function serveStatic(app: Express) {
 
   app.use(express.static(distPath));
 
-  app.use('*', (_req, res) => {
+  const staticRateLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 50, // limit each IP to 50 requests per windowMs
+  });
+
+  app.use('*', staticRateLimiter, (_req, res) => {
     res.sendFile(path.resolve(distPath, 'index.html'));
   });
 }
