@@ -1,13 +1,12 @@
-import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { MapPin, Navigation as NavigationIcon } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 export default function BrandLogosGrid() {
-  const swiperRef = useRef<any>(null);
+  // We'll use the swiper instance directly without a ref since we don't need to control it programmatically
 
   const brands = [
     { name: 'Toyota', logo: '/images/brands/toyota.webp' },
@@ -45,7 +44,6 @@ export default function BrandLogosGrid() {
         {/* Logo Carousel */}
         <div className="relative">
           <Swiper
-            ref={swiperRef}
             modules={[Autoplay, Navigation, Pagination]}
             spaceBetween={30}
             slidesPerView={'auto'}
@@ -118,7 +116,7 @@ export default function BrandLogosGrid() {
             {/* Areas List */}
             <div className="bg-gray-100 rounded-xl p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
-                <Navigation className="h-5 w-5 text-gray-600" />
+                <MapPin className="h-5 w-5 text-gray-600" />
                 <h3 className="text-2xl font-medium mb-6 text-gray-900">Coverage Areas</h3>
               </div>
               <div className="grid grid-cols-2 gap-3">
