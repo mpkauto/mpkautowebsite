@@ -28,10 +28,20 @@ const commonDeps = [
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@shared': path.resolve(__dirname, 'src/shared'),
-    }
+    alias: [
+      {
+        find: 'react-countup',
+        replacement: 'react-countup/build/CountUp.js',
+      },
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src'),
+      },
+      {
+        find: '@shared',
+        replacement: path.resolve(__dirname, 'src/shared'),
+      },
+    ]
   },
   build: {
     outDir: 'dist',
