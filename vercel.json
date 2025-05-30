@@ -5,7 +5,10 @@
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "workingDirectory": "client",
+        "installCommand": "npm install",
+        "buildCommand": "vite build"
       }
     },
     {

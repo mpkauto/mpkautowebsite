@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "vercel-build": "cd client && npm install && npm run build"
+    "vercel-build": "cd client && npm install && vite build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
