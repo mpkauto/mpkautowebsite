@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// Common dependencies to optimize
+// Common dependencies to pre-bundle
 const commonDeps = [
   'react',
   'react-dom',
@@ -18,52 +18,43 @@ const commonDeps = [
   'tailwind-merge',
   'tailwindcss-animate',
   'wouter',
-  // Radix UI packages - explicitly list all used components
   '@radix-ui/react-select',
   '@radix-ui/react-dialog',
   '@radix-ui/react-popover',
   '@radix-ui/react-accordion',
-  // Add other Radix UI packages as needed
 ];
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: [
-      {
-        find: 'react-countup',
-        replacement: 'react-countup/build/index.js',
-      },
-      {
-        find: '@',
-        replacement: path.resolve(__dirname, 'src'),
-      },
-      {
-        find: '@shared',
-        replacement: path.resolve(__dirname, 'src/shared'),
-      },
-    ]
+    alias: {
+      'react-countup': 'react-countup/build/index.js',
+      '@': path.resolve(__dirname, 'src'),
+      '@shared': path.resolve(__dirname, 'src/shared'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@lib': path.resolve(__dirname, 'src/lib'),
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@types': path.resolve(__dirname, 'src/types'),
+      '@utils': path.resolve(__dirname, 'src/utils')
+    }
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
-      // Don't externalize any dependencies - bundle everything
       external: [],
       output: {
         manualChunks: {
-          // Create a separate chunk for Radix UI
           'radix-ui': [
             '@radix-ui/react-select',
             '@radix-ui/react-dialog',
             '@radix-ui/react-popover',
             '@radix-ui/react-accordion'
           ],
-          // Create a separate chunk for React
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          // Create a separate chunk for date libraries
           'date-vendor': ['date-fns', 'react-day-picker'],
-          // Group other UI libraries
           'ui-vendor': [
             'framer-motion',
             'lucide-react',
@@ -72,7 +63,6 @@ export default defineConfig({
             'react-countup',
             'wouter'
           ],
-          // Group other dependencies
           'vendor': ['zod', '@tanstack/react-query', 'class-variance-authority']
         },
       },
@@ -88,7 +78,6 @@ export default defineConfig({
     exclude: ['@eslint/config-array', 'esbuild'],
   },
   ssr: {
-    // Bundle all dependencies for SSR
     noExternal: true,
   },
   server: {
