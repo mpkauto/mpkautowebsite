@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "vercel-build": "vite build"
+    "dev": "cd client && vite",
+    "build": "cd client && vite build",
+    "preview": "cd client && vite preview",
+    "vercel-build": "cd client && vite build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

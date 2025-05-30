@@ -4,12 +4,13 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  root: '.', // ensures it's relative to MpkAutoService root
+  root: './client', // Set root to client directory
+  publicDir: './client/public',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@': path.resolve(__dirname, 'client/src'),
+      '@components': path.resolve(__dirname, 'client/src/components'),
+      '@assets': path.resolve(__dirname, 'client/src/assets'),
     },
   },
   build: {
