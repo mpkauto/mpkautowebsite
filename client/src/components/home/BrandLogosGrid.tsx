@@ -1,24 +1,13 @@
-import { useEffect, useRef } from 'react';
-import { register } from 'swiper/element/bundle';
+import { useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/autoplay';
-import { MapPin, Navigation } from 'lucide-react';
-
-// Register Swiper custom elements
-register();
-
-// Add TypeScript declarations for Swiper custom elements
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'swiper-container': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-      'swiper-slide': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-    }
-  }
-}
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { MapPin, Navigation as NavigationIcon } from 'lucide-react';
 
 export default function BrandLogosGrid() {
-  const swiperElRef = useRef<HTMLElement | null>(null);
+  const swiperRef = useRef<any>(null);
 
   const brands = [
     { name: 'Toyota', logo: '/images/brands/toyota.webp' },
@@ -46,52 +35,6 @@ export default function BrandLogosGrid() {
     'Tambaram',
   ];
 
-  useEffect(() => {
-    // Get the current swiper element from ref
-    const swiperEl = swiperElRef.current;
-
-    if (swiperEl) {
-      // Swiper parameters
-      const swiperParams = {
-        slidesPerView: 'auto',
-        spaceBetween: 30,
-        loop: true,
-        autoplay: {
-          delay: 0,
-          disableOnInteraction: false,
-        },
-        speed: 3000,
-        breakpoints: {
-          640: {
-            slidesPerView: 3,
-          },
-          768: {
-            slidesPerView: 4,
-          },
-          1024: {
-            slidesPerView: 5,
-          },
-        },
-      };
-
-      // Assign parameters to Swiper element
-      Object.assign(swiperEl, swiperParams);
-
-      // Initialize Swiper
-      (swiperEl as any).initialize();
-    }
-
-    // Cleanup function
-    return () => {
-      if (swiperElRef.current) {
-        const swiperInstance = (swiperElRef.current as any).swiper;
-        if (swiperInstance) {
-          swiperInstance.destroy(true, true);
-        }
-      }
-    };
-  }, []);
-
   return (
     <section className="py-20 bg-white overflow-hidden">
       <div className="container mx-auto">
@@ -101,14 +44,32 @@ export default function BrandLogosGrid() {
 
         {/* Logo Carousel */}
         <div className="relative">
-          <swiper-container
-            ref={(el: any) => {
-              swiperElRef.current = el;
+          <Swiper
+            ref={swiperRef}
+            modules={[Autoplay, Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={'auto'}
+            loop={true}
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+            }}
+            speed={3000}
+            breakpoints={{
+              640: {
+                slidesPerView: 3,
+              },
+              768: {
+                slidesPerView: 4,
+              },
+              1024: {
+                slidesPerView: 5,
+              },
             }}
             className="brand-logos-swiper"
           >
             {brands.map((brand, index) => (
-              <swiper-slide key={index} className="!w-auto">
+              <SwiperSlide key={index} className="!w-auto">
                 <div className="bg-white p-4 rounded-lg shadow-sm flex items-center justify-center grayscale hover:grayscale-0 hover:opacity-80 transition-all duration-300">
                   <img
                     src={brand.logo}
@@ -117,9 +78,9 @@ export default function BrandLogosGrid() {
                     loading="lazy"
                   />
                 </div>
-              </swiper-slide>
+              </SwiperSlide>
             ))}
-          </swiper-container>
+          </Swiper>
         </div>
 
         {/* Service Areas Section */}
