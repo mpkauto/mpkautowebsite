@@ -44,7 +44,7 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
-      external: [],
+      external: ['drizzle-orm/pg-core', 'drizzle-orm'],
       output: {
         manualChunks: {
           'radix-ui': [
