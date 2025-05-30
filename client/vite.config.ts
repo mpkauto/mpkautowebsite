@@ -22,6 +22,7 @@ const commonDeps = [
   '@radix-ui/react-select',
   '@radix-ui/react-dialog',
   '@radix-ui/react-popover',
+  '@radix-ui/react-accordion',
   // Add other Radix UI packages as needed
 ];
 
@@ -52,7 +53,12 @@ export default defineConfig({
       output: {
         manualChunks: {
           // Create a separate chunk for Radix UI
-          'radix-ui': ['@radix-ui/react-select', '@radix-ui/react-dialog', '@radix-ui/react-popover'],
+          'radix-ui': [
+            '@radix-ui/react-select',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-accordion'
+          ],
           // Create a separate chunk for React
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           // Create a separate chunk for date libraries
