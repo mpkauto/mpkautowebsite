@@ -29,6 +29,7 @@
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.55.0",
     "react-hot-toast": "^2.5.2",
+    "react-intersection-observer": "^9.16.0",
     "react-scroll-animation": "^1.0.3",
     "wouter": "^3.7.1",
     "zod": "^3.25.36"
