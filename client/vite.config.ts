@@ -8,6 +8,7 @@ const commonDeps = [
   'react-dom',
   'react-router-dom',
   'react-day-picker',
+  'react-countup',
   'date-fns',
   'lucide-react',
   'framer-motion',
@@ -16,6 +17,7 @@ const commonDeps = [
   'class-variance-authority',
   'tailwind-merge',
   'tailwindcss-animate',
+  'wouter',
   // Radix UI packages - explicitly list all used components
   '@radix-ui/react-select',
   '@radix-ui/react-dialog',
@@ -46,7 +48,14 @@ export default defineConfig({
           // Create a separate chunk for date libraries
           'date-vendor': ['date-fns', 'react-day-picker'],
           // Group other UI libraries
-          'ui-vendor': ['framer-motion', 'lucide-react', 'tailwind-merge', 'tailwindcss-animate'],
+          'ui-vendor': [
+            'framer-motion',
+            'lucide-react',
+            'tailwind-merge',
+            'tailwindcss-animate',
+            'react-countup',
+            'wouter'
+          ],
           // Group other dependencies
           'vendor': ['zod', '@tanstack/react-query', 'class-variance-authority']
         },
