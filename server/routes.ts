@@ -1,14 +1,14 @@
 import type { Express, Request, Response, NextFunction } from 'express';
 import { createServer, type Server } from 'http';
-import { insertBookingSchema, insertContactSchema } from '@shared/schema';
+import { insertBookingSchema, insertContactSchema } from '../client/src/shared/schema';
 import { ZodError } from 'zod';
-import passport from 'passport';
+import * as passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import session from 'express-session';
-import bcrypt from 'bcrypt';
+import * as session from 'express-session';
+import * as bcrypt from 'bcrypt';
+import * as express from 'express';
 import { db } from './db';
 import { supabase } from './config/supabase';
-import express from 'express';
 
 const router = express.Router();
 
@@ -26,7 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }
 
   app.use(
-    session({
+    session.default({
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
@@ -41,16 +41,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(passport.session());
 
   passport.use(
-    new LocalStrategy(async (username, password, done) => {
+    new LocalStrategy(async (username, password, done: (err: any, user?: any, options?: any) => void) => {
       try {
         const user = await db.users.findByUsername(username);
-        if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
+        if (!user) return done(null, false, { message: 'Incorrect username.' });
+
         const isMatch = await bcrypt.compare(password, (user as { password: string }).password);
-        if (!isMatch) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
+        if (!isMatch) return done(null, false, { message: 'Incorrect password.' });
+
         return done(null, user);
       } catch (err) {
         return done(err);
@@ -58,11 +56,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     })
   );
 
-  passport.serializeUser((user: any, done) => {
+  passport.serializeUser((user: any, done: (err: any, id?: unknown) => void) => {
     done(null, user.id);
   });
 
-  passport.deserializeUser(async (id: number, done) => {
+  passport.deserializeUser(async (id: number, done: (err: any, user?: any) => void) => {
     try {
       const user = await db.users.findById(id);
       done(null, user);

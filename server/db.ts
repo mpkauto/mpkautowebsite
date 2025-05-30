@@ -1,42 +1,49 @@
-// Temporary in-memory storage solution
-const inMemoryStorage = {
+import type { User, Booking, Contact } from './types';
+
+type InsertUser = Omit<User, 'id'>;
+type InsertBooking = Omit<Booking, 'id'>;
+type InsertContact = Omit<Contact, 'id'>;
+
+// In-memory type-safe store
+const inMemoryStorage: {
+  bookings: Booking[];
+  contacts: Contact[];
+  users: User[];
+} = {
   bookings: [],
   contacts: [],
-  jobApplications: [],
   users: [],
 };
 
 export const db = {
   bookings: {
-    create: (data: any) => {
+    create: (data: InsertBooking): Booking => {
       const id = inMemoryStorage.bookings.length + 1;
       const booking = { id, ...data };
       inMemoryStorage.bookings.push(booking);
       return booking;
     },
-    getAll: () => inMemoryStorage.bookings,
+    getAll: (): Booking[] => inMemoryStorage.bookings,
   },
   contacts: {
-    create: (data: any) => {
+    create: (data: InsertContact): Contact => {
       const id = inMemoryStorage.contacts.length + 1;
       const contact = { id, ...data };
       inMemoryStorage.contacts.push(contact);
       return contact;
     },
-    getAll: () => inMemoryStorage.contacts,
-  },
-  jobApplications: {
-    create: (data: any) => {
-      const id = inMemoryStorage.jobApplications.length + 1;
-      const application = { id, ...data };
-      inMemoryStorage.jobApplications.push(application);
-      return application;
-    },
-    getAll: () => inMemoryStorage.jobApplications,
+    getAll: (): Contact[] => inMemoryStorage.contacts,
   },
   users: {
-    findByUsername: (username: string) =>
+    create: (data: InsertUser): User => {
+      const id = inMemoryStorage.users.length + 1;
+      const user = { id, ...data };
+      inMemoryStorage.users.push(user);
+      return user;
+    },
+    findByUsername: (username: string): User | undefined =>
       inMemoryStorage.users.find((u) => u.username === username),
-    findById: (id: number) => inMemoryStorage.users.find((u) => u.id === id),
+    findById: (id: number): User | undefined =>
+      inMemoryStorage.users.find((u) => u.id === id),
   },
 };

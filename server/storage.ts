@@ -1,110 +1,64 @@
-import {
-  users,
-  type User,
-  type InsertUser,
-  bookings,
-  type Booking,
-  type InsertBooking,
-  contacts,
-  type Contact,
-  type InsertContact,
-  jobApplications,
-  type JobApplication,
-  type InsertJobApplication,
-} from '@shared/schema';
+import type { User, Booking, Contact } from './types';
+import type { InsertBooking, InsertContact, InsertUser } from './types';
 import { db } from './db';
-import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
 
 export interface IStorage {
-  // User Operations
+  // User operations
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
 
-  // Booking Operations
+  // Booking operations
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBooking(id: number): Promise<Booking | undefined>;
   getAllBookings(): Promise<Booking[]>;
 
-  // Contact Operations
+  // Contact operations
   createContact(contact: InsertContact): Promise<Contact>;
   getContact(id: number): Promise<Contact | undefined>;
   getAllContacts(): Promise<Contact[]>;
-
-  // Job Application Operations
-  createJobApplication(application: InsertJobApplication): Promise<JobApplication>;
-  getJobApplication(id: number): Promise<JobApplication | undefined>;
-  getAllJobApplications(): Promise<JobApplication[]>;
 }
 
 export class DrizzleStorage implements IStorage {
   // User Methods
   async getUser(id: number): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
+    return db.users.findById(id);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user;
+    return db.users.findByUsername(username);
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const hashedPassword = await bcrypt.hash(insertUser.password, 10);
-    const [newUser] = await db
-      .insert(users)
-      .values({
-        username: insertUser.username,
-        password: hashedPassword,
-      })
-      .returning();
-    return newUser;
+    return db.users.create({ ...insertUser, password: hashedPassword });
   }
 
   // Booking Methods
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
-    const [newBooking] = await db.insert(bookings).values(insertBooking).returning();
-    return newBooking;
+    return db.bookings.create(insertBooking);
   }
 
   async getBooking(id: number): Promise<Booking | undefined> {
-    const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
-    return booking;
+    return db.bookings.getAll().find((b) => b.id === id);
   }
 
   async getAllBookings(): Promise<Booking[]> {
-    return db.select().from(bookings);
+    return db.bookings.getAll();
   }
 
   // Contact Methods
   async createContact(insertContact: InsertContact): Promise<Contact> {
-    const [newContact] = await db.insert(contacts).values(insertContact).returning();
-    return newContact;
+    return db.contacts.create(insertContact);
   }
 
   async getContact(id: number): Promise<Contact | undefined> {
-    const [contact] = await db.select().from(contacts).where(eq(contacts.id, id));
-    return contact;
+    return db.contacts.getAll().find((c) => c.id === id);
   }
 
   async getAllContacts(): Promise<Contact[]> {
-    return db.select().from(contacts);
-  }
-
-  // Job Application Methods
-  async createJobApplication(insertApplication: InsertJobApplication): Promise<JobApplication> {
-    const [newApplication] = await db.insert(jobApplications).values(insertApplication).returning();
-    return newApplication;
-  }
-
-  async getJobApplication(id: number): Promise<JobApplication | undefined> {
-    const [application] = await db.select().from(jobApplications).where(eq(jobApplications.id, id));
-    return application;
-  }
-
-  async getAllJobApplications(): Promise<JobApplication[]> {
-    return db.select().from(jobApplications);
+    return db.contacts.getAll();
   }
 }
 
