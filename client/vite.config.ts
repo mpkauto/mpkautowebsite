@@ -31,7 +31,7 @@ export default defineConfig({
     alias: [
       {
         find: 'react-countup',
-        replacement: 'react-countup/build/CountUp.js',
+        replacement: 'react-countup/build/index.js',
       },
       {
         find: '@',
